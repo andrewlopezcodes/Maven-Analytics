@@ -64,9 +64,10 @@ my_list6 = np.linspace(10, 100, 10).reshape(5,2)
 print(my_list6)
 
 '''
-Create an array of random numbers between 0 and 1
+Create an array of random numbers between 0 and 1,
+in a 3X3 shape.
 '''
 
 rng = np.random.default_rng(448)
-randomArray = rng.random(20)
+randomArray = rng.random(9).reshape(3,3)
 print(randomArray)
