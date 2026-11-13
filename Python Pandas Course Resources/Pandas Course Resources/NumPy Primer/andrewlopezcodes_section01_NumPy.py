@@ -16,6 +16,7 @@ Once you've done that report the following about the array:
 * The type of data contained inside
 '''
 import numpy as np
+import numpy.random as default_rng
 
 my_list = [x * 10 for x in range(1, 11)]
 # print(my_list)
@@ -43,6 +44,25 @@ If so:
 * It's ok if the datatype is float or int.
 '''
 my_list3 = np.array(range(1, 11)) * 10
-print(my_list3)
+# print(my_list3)
 my_list4 = my_list3.reshape(5, 2)
-print(my_list4)
+# print(my_list4)
+
+'''
+Recreate the array from the first assignment but make it 
+5 rows by 2 columns
+'''
+
+my_list = [x * 10 for x in range(1, 11)]
+
+my_list5 = np.arange(1, 11,1).reshape(5,2) * 10
+# print(my_list5)
+
+
+'''
+Create an array of random numbers between 0 and 1
+'''
+
+rng = np.random.default_rng(448)
+randomArray = rng.random(20)
+print(randomArray)
