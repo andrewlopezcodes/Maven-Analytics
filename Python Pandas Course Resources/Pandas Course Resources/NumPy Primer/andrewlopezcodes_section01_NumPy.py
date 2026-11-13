@@ -49,7 +49,9 @@ my_list4 = my_list3.reshape(5, 2)
 # print(my_list4)
 
 '''
-Recreate the array from the first assignment but make it 
+Are there any NumPy functions that can create arrays so
+we don't have to convert from a Python list? Recreate 
+the array from the first assignment but make it 
 5 rows by 2 columns
 '''
 
@@ -58,6 +60,8 @@ my_list = [x * 10 for x in range(1, 11)]
 my_list5 = np.arange(1, 11,1).reshape(5,2) * 10
 # print(my_list5)
 
+my_list6 = np.linspace(10, 100, 10).reshape(5,2)
+print(my_list6)
 
 '''
 Create an array of random numbers between 0 and 1
