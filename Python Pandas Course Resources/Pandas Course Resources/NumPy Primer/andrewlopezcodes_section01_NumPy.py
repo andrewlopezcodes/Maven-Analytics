@@ -61,7 +61,7 @@ my_list5 = np.arange(1, 11,1).reshape(5,2) * 10
 # print(my_list5)
 
 my_list6 = np.linspace(10, 100, 10).reshape(5,2)
-print(my_list6)
+# print(my_list6)
 
 '''
 Create an array of random numbers between 0 and 1,
@@ -70,4 +70,16 @@ in a 3X3 shape.
 
 rng = np.random.default_rng(448)
 randomArray = rng.random(9).reshape(3,3)
-print(randomArray)
+# print(randomArray)
+
+'''
+Can you slice and dice the random array we created in the last exercise?
+
+First two 'rows'
+first 'column'
+second number in third 'row'
+'''
+
+print(randomArray[1:,:])            # First two 'rows'
+print(randomArray[:, 0:1])          # First 'column'
+print(randomArray[2:, 1:2])         # second number in third 'row'

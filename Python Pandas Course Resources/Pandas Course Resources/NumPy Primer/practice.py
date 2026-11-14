@@ -54,7 +54,39 @@ rng.integers(0, 20, 100)        #  integers(start, end, how many numbers to disp
 
 
 rng.normal(73, 5, 10)
-print(rng.normal(73, 5, 10))    #result -> [67.5063021  66.85650087 71.21859854 70.14466119 74.38339875 78.87574052 59.70007029 73.82614671 77.14231196 74.49906013]
+# print(rng.normal(73, 5, 10))    #result -> [67.5063021  66.85650087 71.21859854 70.14466119 74.38339875 78.87574052 59.70007029 73.82614671 77.14231196 74.49906013]
+
+'''
+Indexing & Slicing Dimensional Arrays
+______________________________________________________________________________________
+'''
+# Single Dimensional Arrays
+# array[index]                    -> indexing to access a single element (0 - indexed)
+# array[start : stop : step size] -> slicing to access a series of elements (stop is not inclusive)
 
 
+product_array = np.array(['fruits','vegetables','cereal','dairy','eggs','snacks','beverages','coffee','tea','spices'])
+productS_array = np.array(['fruits','vegetables','cereal','dairy','eggs','snacks','beverages','coffee','tea'])
+# print(product_array[-1])          # result -> "spices"
+# print(product_array[5::2])        # result -> ['snacks', 'coffee', 'spices']
+
+
+# Multi Dimensional Arrays
+# array[row index, column index]  -> indexing to access a single element (0 - indexed)
+# array[start : stop : step size, start : stop : step size] -> slicing to access a series of elements
+
+
+product_array2D = product_array.reshape(2, 5)
+# print(product_array2D)              # reuslt -> [['fruits' 'vegetables' 'cereal' 'dairy' 'eggs']
+                                    #           ['snacks' 'beverages' 'coffee' 'tea' 'spices']]
+
+# print(product_array2D[1, 2])        # result -> 'coffee'
+# print(product_array2D[:, 2:])       # result ->  [['cereal' 'dairy' 'eggs']
+                                    #            ['coffee' 'tea' 'spices']]
+                                    # *code explain* -> [:, <- (grab all rows) 2 <- (start at index 2)  : <- (semicolon blank :" " go all the way to the end)]
+
+# print(product_array2D[1:, :])       # result ->   ['snacks','beverages','coffee','tea','spices']
+array3d = productS_array.reshape(3,3)
+print(array3d)
+print(array3d[2:, 1:2])
 
