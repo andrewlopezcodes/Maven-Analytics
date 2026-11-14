@@ -80,6 +80,34 @@ first 'column'
 second number in third 'row'
 '''
 
-print(randomArray[1:,:])            # First two 'rows'
-print(randomArray[:, 0:1])          # First 'column'
-print(randomArray[2:, 1:2])         # second number in third 'row'
+# print(randomArray[1:,:])            # First two 'rows'
+# print(randomArray[:, 0:1])          # First 'column'
+# print(randomArray[2:, 1:2])         # second number in third 'row'
+
+'''
+prices = np.array([5.99,6.99,22.49,99.99,4.99,49.99])
+
+1. Add, a flat shipping cost of 5 to the prices array to get the 
+total amount owed.
+
+2. Create a random array
+rng = np.random.default_rng(448)
+randomArray = rng.random(9)
+discountPercent = randomArray
+
+3. to get percent owed, subtract the first 6 number in discountPercent
+from 1, 
+
+4. then multiply the percent owed by total to get the final amount owed
+'''
+#1 
+prices = np.array([5.99,6.99,22.49,99.99,4.99,49.99])
+total = prices + 5
+print(total)
+
+#2
+rng = np.random.default_rng(448)
+randomArray = rng.random(9)
+discountPercent = 1 - randomArray[0:6]
+final_owed = total * discountPercent
+print(final_owed.round(2))
