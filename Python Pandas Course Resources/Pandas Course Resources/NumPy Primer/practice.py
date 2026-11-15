@@ -107,11 +107,43 @@ array3d = productS_array.reshape(3,3)
 
 short_products = np.array(['fruits', 'vegetables', 'cereal', 'dairy', 'eggs'])
 small_sales_array = np.array([0, 5, 155, 0, 518])
-print(short_products[small_sales_array > 0])                          # returns -> ['vegetables' 'cereal' 'eggs']
+# print(short_products[small_sales_array > 0])                          # returns -> ['vegetables' 'cereal' 'eggs']
                                                                       # *code explain* -> Using "small_sales_array" as a Boolean array, 
                                                                       #                   "[small_sales_array > 0]" returns -> [False, True, True, False, True}
                                                                       #                   the indexes which are "True", [1,2,4] filter the "short_products" array 
                                                                       #                   and returns short_products[1, 2, 4] -> ['vegetables' 'cereal' 'eggs']
 
 
-print(f'small_sales_array = true index {np.argwhere(small_sales_array> 0)[0]}  -> short_products[1] {short_products[1]}\nsmall_sales_array = true index {np.argwhere(small_sales_array> 0)[1]} -> short_products[2] {short_products[2]}\nsmall_sales_array = true index {np.argwhere(small_sales_array> 0)[2]} -> short_products[4] {short_products[4]}]')                                    
+# print(f'small_sales_array = true index {np.argwhere(small_sales_array> 0)[0]}  -> short_products[1] {short_products[1]}\nsmall_sales_array = true index {np.argwhere(small_sales_array> 0)[1]} -> short_products[2] {short_products[2]}\nsmall_sales_array = true index {np.argwhere(small_sales_array> 0)[2]} -> short_products[4] {short_products[4]}]')                                    
+
+
+'''
+  ARRAY AGGREGATION METHODS
+  __________________________________________________________________________________
+'''
+# print(sales_array.sum())                                              # returns -> 6848
+# print(sales_array.sum(axis=0))                                        # returns -> [   0 3659 1387  634 1168]
+                                                                      # *code explain* -> sums the matrix columns and returns an array with the summed totals
+                                                                      #                   [   0    5  155    0  518]
+                                                                      #                   [   0 1827  616  317  325]
+                                                                      #                   ==========================
+                                                                      #         SUM TOTAL [   0 3659 1387  634 1168]
+
+# print(sales_array.sum(axis=1))                                        # returns -> [ 678 3085]
+                                                                      # *code explain* -> sums the matrix rows and returns an array with the summed totals
+                                                                      #                                               Totals
+                                                                      #                   [   0    5  155    0  518] |  678
+                                                                      #                   [   0 1827  616  317  325] | 3085
+
+
+rng = np.random.default_rng(616)                                      # *code explain* -> random number generator from numpy using a seed of 616
+price = (rng.random(10) * 10).round(2)                                # *code explain* -> assign to variable price 10 random numbers between 0 -1 multiplied 
+                                                                      #                   by 10 and rounded to 2 decimal places
+print(price)                                                          # returns ->  [3.97 8.66 4.6  3.06 5.74 0.89 8.82 7.32 7.32 5.62]
+
+inventory = rng.integers(0, 100, 10)                                  # *code explain* -> random number generator for integers 
+                                                                      #                   low number = 0 high number = 100 how many numbers to generate = 10
+print(inventory)                                                      # returns -> [80 33 60  6 31 35 16 20 29 43]
+
+print(price.mean())                                                   # returns -> 5.6
+print
