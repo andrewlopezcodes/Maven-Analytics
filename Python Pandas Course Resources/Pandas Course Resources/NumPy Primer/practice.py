@@ -78,15 +78,40 @@ productS_array = np.array(['fruits','vegetables','cereal','dairy','eggs','snacks
 
 product_array2D = product_array.reshape(2, 5)
 # print(product_array2D)              # reuslt -> [['fruits' 'vegetables' 'cereal' 'dairy' 'eggs']
-                                    #           ['snacks' 'beverages' 'coffee' 'tea' 'spices']]
+                                      #           ['snacks' 'beverages' 'coffee' 'tea' 'spices']]
 
 # print(product_array2D[1, 2])        # result -> 'coffee'
 # print(product_array2D[:, 2:])       # result ->  [['cereal' 'dairy' 'eggs']
-                                    #            ['coffee' 'tea' 'spices']]
-                                    # *code explain* -> [:, <- (grab all rows) 2 <- (start at index 2)  : <- (semicolon blank :" " go all the way to the end)]
+                                      #            ['coffee' 'tea' 'spices']]
+                                      # *code explain* -> [:, <- (grab all rows) 2 <- (start at index 2)  : <- (semicolon blank :" " go all the way to the end)]
 
 # print(product_array2D[1:, :])       # result ->   ['snacks','beverages','coffee','tea','spices']
 array3d = productS_array.reshape(3,3)
-print(array3d)
-print(array3d[2:, 1:2])
+# print(array3d)
+# print(array3d[2:, 1:2])
 
+#___________________________________________________________________________
+
+# print(sales_array)
+# print(sales_array != 0)                                             # Performing a logical test on a NumPy array returns a Boolean array with the results of the logical test on each array element
+# print(sales_array[sales_array != 0])                                # indexing an array with a Boolean array returns an array with the elements where the Boolean value is True
+
+# print(sales_array[(sales_array == 616) | (sales_array < 100)])      # returns -> [  0   5   0   0 616   0 616] using "|" as "or"
+# print(sales_array[(sales_array > 100) & (sales_array < 500)])       # returns -> [155 317 325 317 325] using "&"" as "and"
+
+# booleanMask1 = (sales_array == 616) | (sales_array < 100)           # returns -> [  0   5   0   0 616   0 616] storing the boolean statement in a variable is called a boolean mask
+# print(sales_array[booleanMask1])
+
+# booleanMask2 = (sales_array > 100) & (sales_array < 500)            # returns -> [155 317 325 317 325] storing the boolean statement in a variable is called a boolean mask
+# print(sales_array[booleanMask2])
+
+short_products = np.array(['fruits', 'vegetables', 'cereal', 'dairy', 'eggs'])
+small_sales_array = np.array([0, 5, 155, 0, 518])
+print(short_products[small_sales_array > 0])                          # returns -> ['vegetables' 'cereal' 'eggs']
+                                                                      # *code explain* -> Using "small_sales_array" as a Boolean array, 
+                                                                      #                   "[small_sales_array > 0]" returns -> [False, True, True, False, True}
+                                                                      #                   the indexes which are "True", [1,2,4] filter the "short_products" array 
+                                                                      #                   and returns short_products[1, 2, 4] -> ['vegetables' 'cereal' 'eggs']
+
+
+print(f'small_sales_array = true index {np.argwhere(small_sales_array> 0)[0]}  -> short_products[1] {short_products[1]}\nsmall_sales_array = true index {np.argwhere(small_sales_array> 0)[1]} -> short_products[2] {short_products[2]}\nsmall_sales_array = true index {np.argwhere(small_sales_array> 0)[2]} -> short_products[4] {short_products[4]}]')                                    

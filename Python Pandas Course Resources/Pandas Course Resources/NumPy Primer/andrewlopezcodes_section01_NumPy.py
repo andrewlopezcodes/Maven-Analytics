@@ -111,3 +111,32 @@ randomArray = rng.random(9)
 discountPercent = 1 - randomArray[0:6]
 final_owed = total * discountPercent
 print(final_owed.round(2))
+
+'''
+ Assignment 5: Filtering Arrays
+___________________________________________________________________________
+Filter the product array to only include those with prices greater than 25.
+
+Modify your logic to include cola, despite it not having a price greater 
+than 25. 
+Store the elements returned in an array called `fancy_feast_special`.
+
+Next, create a shipping cost array where the cost is 0 if price is greater 
+than 20, and 5 if not. 
+
+'''
+
+products = np.array(
+    ["salad", "bread", "mustard", "rare tomato", "cola", "gourmet ice cream"]
+)
+
+prices = np.array([5.99,6.99,22.49,99.99,4.99,49.99])
+print(products[(prices > 25)])
+
+fancy_feast_special =  (prices > 25) | (prices == 4.99)
+print(products[fancy_feast_special])
+
+shipping_costs = np.where(prices > 20, 0, 5)
+print(shipping_costs)
+
+
