@@ -131,9 +131,9 @@ products = np.array(
 )
 
 prices = np.array([5.99,6.99,22.49,99.99,4.99,49.99])
-print(products[(prices > 25)])
+print(products[prices > 25])
 
-fancy_feast_special =  (prices > 25) | (prices == 4.99)
+fancy_feast_special =  (prices > 25) | (products == 'cola')
 print(products[fancy_feast_special])
 
 shipping_costs = np.where(prices > 20, 0, 5)
