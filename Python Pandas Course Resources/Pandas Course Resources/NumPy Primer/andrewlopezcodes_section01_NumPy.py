@@ -148,10 +148,70 @@ Then, calculated the mean, min, max, and median of the top three prices.
 
 Finally, calculate the number of unique price tiers in our `price_tiers` array.
 '''
-prices = np.array([5.99,6.99,22.49,99.99,4.99,49.99])
-sortedPrices = np.sort(prices)
-print(sortedPrices[3:])
-print(f'Top 3 Price Stats\nMean: {sortedPrices.mean()}\nMin: {sortedPrices.min()}\nMax: {sortedPrices.max()}\nMedian: {round(np.median(sortedPrices[3:]),2)}' )
+# prices = np.array([5.99,6.99,22.49,99.99,4.99,49.99])
+# sortedPrices = np.sort(prices)
+# print(sortedPrices[3:])
+# print(f'Top 3 Price Stats\nMean: {sortedPrices.mean()}\nMin: {sortedPrices.min()}\nMax: {sortedPrices.max()}\nMedian: {round(np.median(sortedPrices[3:]),2)}' )
 
-price_tiers = np.array(["budget", "budget", "mid-tier", "luxury", "mid-tier", "luxury"])
-print(f'Unique Price Tiers: {np.unique(price_tiers)}\nNumber of Unique Price Tiers: {len(np.unique(price_tiers))}')
+# price_tiers = np.array(["budget", "budget", "mid-tier", "luxury", "mid-tier", "luxury"])
+# print(f'Unique Price Tiers: {np.unique(price_tiers)}\nNumber of Unique Price Tiers: {len(np.unique(price_tiers))}')
+
+
+'''
+ Assignment 7: Bringing it All Together
+__________________________________________________________________________ 
+
+Ok, final NumPy task - let's read in some data with the help of Pandas.
+
+Our data scientist provided the code to read in a csv as a Pandas dataframe, 
+and has converted the two columns of interest to arrays.
+
+* Filter `sales_array` down to only sales where the product family was produce. 
+
+* Then, randomly sample roughly half (random number < .5) of the produce sales 
+and report the mean and median sales. Use a random seed of 2022.
+
+* Finally, create a new array that has the values 'above_both', 'above_median', 
+and 'below_both' based on whether the sales were above the median and mean of 
+the sample, just above the median of the sample, or below both the median and 
+mean of the sample. 
+'''
+import pandas as pd
+
+import numpy as np
+
+retail_df = pd.read_csv(
+    "C:\\Users\\sneak\\Desktop\\Maven Analytics\\Python Pandas Course Resources\\Pandas Course Resources\\NumPy Primer\\retail_2016_2017.csv", skiprows=range(1, 11000), nrows=1000
+)
+
+family_array = np.array(retail_df["family"])
+
+
+sales_array = np.array(retail_df["sales"])
+filtered_sales_array = sales_array[(family_array == 'PRODUCE')]
+# print(filtered_sales_array)
+
+rng = np.random.default_rng(2022)
+halfFilteredSales = len(filtered_sales_array) // 2
+randomFilteredSales = rng.choice(filtered_sales_array, size= halfFilteredSales, replace=False)
+print(randomFilteredSales)
+
+level = ['above_both', 'above_median', 'below_both']
+
+medianRandomFilteredSales = round(np.median(filtered_sales_array),2)
+meanRandomFilteredSales = round(np.mean(filtered_sales_array),2)
+print(f'median: {medianRandomFilteredSales}\nmean: {meanRandomFilteredSales}')
+
+first5 = []
+
+for sale in randomFilteredSales[0:6]:
+    if sale > meanRandomFilteredSales:
+        first5.append(level[0])
+    elif sale > medianRandomFilteredSales:
+        first5.append(level[1])
+    else:
+        first5.append(level[2])
+    print(first5)
+    
+
+

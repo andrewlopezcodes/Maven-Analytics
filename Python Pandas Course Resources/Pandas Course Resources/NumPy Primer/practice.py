@@ -166,7 +166,42 @@ sorting not in place / np.sort(array)  -> does not change original array
 '''
 
 sales_array = np.array([0,5,155,0,518,0,1827,616,317,325]).reshape(2,5)
-print(sales_array)                                                              # returns -> [[0,5,155,0,518],[0,1827,616,317,325]] (before sorting in place)
-print(np.sort(sales_array))                                                     # returns -> [[0, 0, 5, 155, 518], [0, 317, 325, 616, 1827]] (sorting not in place)
-print(sales_array.sort())                                                       # returns -> None
-print(sales_array)                                                              # returns -> # [[0, 0, 5, 155, 518], [0, 317, 325, 616, 1827]] (after sorting in place)
+# print(sales_array)                                                              # returns -> [[0,5,155,0,518],[0,1827,616,317,325]] (before sorting in place)
+# print(np.sort(sales_array))                                                     # returns -> [[0, 0, 5, 155, 518], [0, 317, 325, 616, 1827]] (sorting not in place)
+# print(sales_array.sort())                                                       # returns -> None
+# print(sales_array)                                                              # returns -> # [[0, 0, 5, 155, 518], [0, 317, 325, 616, 1827]] (after sorting in place)
+
+
+'''
+Vectorization
+_______________________________________________________________
+'''
+def for_loop_multiply_list(list1, list2):                                     # *code explain* -> function that multiplies two Python lists
+  product_list =[]
+  for element1, element2 in zip(list1, list2):
+    product_list.append(element1 * element2)
+  return product_list
+
+
+def multiply_arrays(array1, array2):                                          # *code explain* -> function that multiplies two NumPy arrays
+  return array1 * array2
+
+list1 = list(range(1000))
+list2 = list(range(1000))
+
+'''
+Broadcasting
+_________________________________________________________________
+Broadcasting lets you perform vectorized operations with arrays of 
+different sizes, where NumPy will expand the smaller array to "fit" 
+the larger one.
+
+Single values (scalars) can b broadcast into arrays of any dimension
+Dimensions with a length greater than one must be the same size
+'''
+
+test_array = np.array([[1,2,3], [1,2,3], [1,2,3]])
+print(test_array)
+print(test_array + 1)
+print(test_array + np.array([3,2,1]))
+print(test_array + np.array([3,2,1]).reshape(3, 1))
