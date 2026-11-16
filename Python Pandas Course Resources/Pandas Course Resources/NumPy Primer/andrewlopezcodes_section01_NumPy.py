@@ -103,14 +103,14 @@ from 1,
 #1 
 prices = np.array([5.99,6.99,22.49,99.99,4.99,49.99])
 total = prices + 5
-print(total)
+# print(total)
 
 #2
 rng = np.random.default_rng(448)
 randomArray = rng.random(9)
 discountPercent = 1 - randomArray[0:6]
 final_owed = total * discountPercent
-print(final_owed.round(2))
+# print(final_owed.round(2))
 
 '''
  Assignment 5: Filtering Arrays
@@ -131,12 +131,28 @@ products = np.array(
 )
 
 prices = np.array([5.99,6.99,22.49,99.99,4.99,49.99])
-print(products[prices > 25])
+# print(products[prices > 25])
 
 fancy_feast_special =  (prices > 25) | (products == 'cola')
-print(products[fancy_feast_special])
+# print(products[fancy_feast_special])
 
 shipping_costs = np.where(prices > 20, 0, 5)
-print(shipping_costs)
+# print(shipping_costs)
 
+'''
+ Assignment 6: Aggregating and Sorting Arrays
+_______________________________________________________________________________
+First, grab the top 3 highest priced items in our list. 
 
+Then, calculated the mean, min, max, and median of the top three prices.
+
+Finally, calculate the number of unique price tiers in our `price_tiers` array.
+'''
+prices = np.array([5.99,6.99,22.49,99.99,4.99,49.99])
+sortedPrices = np.sort(prices)
+print(sortedPrices[3:])
+print
+print(f'Top 3 Price Stats\nMean: {sortedPrices.mean()}\nMin: {sortedPrices.min()}\nMax: {sortedPrices.max()}\nMedian: {round(np.median(sortedPrices[3:]),2)}' )
+
+price_tiers = np.array(["budget", "budget", "mid-tier", "luxury", "mid-tier", "luxury"])
+print(f'Unique Price Tiers: {np.unique(price_tiers)}\nNumber of Unique Price Tiers: {len(np.unique(price_tiers))}')

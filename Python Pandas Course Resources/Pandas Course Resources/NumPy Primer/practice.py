@@ -139,11 +139,34 @@ small_sales_array = np.array([0, 5, 155, 0, 518])
 rng = np.random.default_rng(616)                                      # *code explain* -> random number generator from numpy using a seed of 616
 price = (rng.random(10) * 10).round(2)                                # *code explain* -> assign to variable price 10 random numbers between 0 -1 multiplied 
                                                                       #                   by 10 and rounded to 2 decimal places
-print(price)                                                          # returns ->  [3.97 8.66 4.6  3.06 5.74 0.89 8.82 7.32 7.32 5.62]
+# print(price)                                                          # returns ->  [3.97 8.66 4.6  3.06 5.74 0.89 8.82 7.32 7.32 5.62]
 
 inventory = rng.integers(0, 100, 10)                                  # *code explain* -> random number generator for integers 
                                                                       #                   low number = 0 high number = 100 how many numbers to generate = 10
-print(inventory)                                                      # returns -> [80 33 60  6 31 35 16 20 29 43]
+# print(inventory)                                                      # returns -> [80 33 60  6 31 35 16 20 29 43]
 
-print(price.mean())                                                   # returns -> 5.6
-print
+# print(price.mean())                                                   # returns -> 5.6
+# print(inventory.mean())                                               # returns -> 35.3
+# print(price * inventory)
+
+'''
+ Array Functions
+ ______________________________________________________________________
+
+np.median(array) #returns the median value in an array
+np.percentile(array, n) #returns a value in the nth percentile in an array
+np.unique(array) #returns the unique values in an array
+np.sqrt(array) #returns the square root of each value in an array
+'''
+'''
+  Sorting Arrays
+_________________________________________________________________________
+sorting in place / array.sort()     -> changes the original array when sorting
+sorting not in place / np.sort(array)  -> does not change original array
+'''
+
+sales_array = np.array([0,5,155,0,518,0,1827,616,317,325]).reshape(2,5)
+print(sales_array)                                                              # returns -> [[0,5,155,0,518],[0,1827,616,317,325]] (before sorting in place)
+print(np.sort(sales_array))                                                     # returns -> [[0, 0, 5, 155, 518], [0, 317, 325, 616, 1827]] (sorting not in place)
+print(sales_array.sort())                                                       # returns -> None
+print(sales_array)                                                              # returns -> # [[0, 0, 5, 155, 518], [0, 317, 325, 616, 1827]] (after sorting in place)
