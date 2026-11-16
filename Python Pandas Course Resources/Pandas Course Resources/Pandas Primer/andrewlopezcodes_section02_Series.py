@@ -50,9 +50,9 @@ _________________________________________________________________________
 dates = pd.Series(oil["date"]).iloc[1000:1100]
 # print(dates)
 
-# sales_series = pd.Series(sales, index=items, name='Sales')
+
 oil_series.index = dates
 print(oil_series)
-print(f'First10 Mean: {round(oil_series[0:9].mean(),2)}')
-print(f'Last10 Mean: {round(oil_series[-10:].mean(),2)}')
+print(f'First10 Mean: {round(oil_series.iloc[:10].mean(),2)}')
+print(f'Last10 Mean: {round(oil_series.iloc[-10:].mean(),2)}')
 print(oil_series["2017-01-01":"2017-01-07"].reset_index(drop=True))
