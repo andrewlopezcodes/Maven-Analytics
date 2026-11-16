@@ -25,8 +25,34 @@ oil_array = np.array(oil["dcoilwtico"].iloc[1000:1100])
 # print(oil_array)
 
 oil_series = pd.Series(oil_array, name="oil_prices")
+# print(oil_series)
+# print(f'Mean: {round(oil_series.values.mean(),2)}')
+# oil_series.astype("int")
+# print(oil_series.astype("int"))
+# print(f'Mean: {round(oil_series.values.mean(),2)}')
+
+'''
+ Assignment 2:  Accessing Series Data
+_______________________________________________________________________
+* Set the date series, which has been created below, to be the index of 
+the oil price series created in assignment 1.
+
+
+* Then, take the mean of the first 10 and last 10 prices of the series.
+
+
+* Finally, grab all oil prices from January 1st, 2017 - January 7th, 2017 
+(inclusive) and set the index to the default integer index.
+_________________________________________________________________________
+'''
+# extract date column from oil DataFrame and grab first 100 rows
+
+dates = pd.Series(oil["date"]).iloc[1000:1100]
+# print(dates)
+
+# sales_series = pd.Series(sales, index=items, name='Sales')
+oil_series.index = dates
 print(oil_series)
-print(f'Mean: {round(oil_series.values.mean(),2)}')
-oil_series.astype("int")
-print(oil_series.astype("int"))
-print(f'Mean: {round(oil_series.values.mean(),2)}')
+print(f'First10 Mean: {round(oil_series[0:9].mean(),2)}')
+print(f'Last10 Mean: {round(oil_series[-10:].mean(),2)}')
+print(oil_series["2017-01-01":"2017-01-07"].reset_index(drop=True))

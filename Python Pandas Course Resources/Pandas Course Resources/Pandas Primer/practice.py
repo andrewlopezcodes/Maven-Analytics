@@ -49,9 +49,9 @@ items = ['coffee', 'bananas', 'tea', 'coconut', 'sugar']
 sales = [0,5,155,0,518]
 sales_series = pd.Series(sales, index=items, name='Sales')
 # print(sales_series)
-print(f'The value at sales_series[\'tea\'] is: {sales_series['tea']}')
+# print(f'The value at sales_series[\'tea\'] is: {sales_series['tea']}')
 
-print(sales_series['bananas':'coconut'])                    # return -> bananas      5
+# print(sales_series['bananas':'coconut'])                    # return -> bananas      5
                                                             #           tea        155
                                                             #           coconut      0
                                                             #           Name: Sales, dtype: int64
@@ -118,7 +118,7 @@ The .loc[] method is the preferred way to access values by their custom labels
 #                                                         #             sugar      518
 #                                                         #             Name: Sales, dtype: int64
 
-# print(sales_series.reset_index(drop=True).loc[3])
+print(sales_series.reset_index(drop=True))
 
 
 
