@@ -151,7 +151,6 @@ Finally, calculate the number of unique price tiers in our `price_tiers` array.
 prices = np.array([5.99,6.99,22.49,99.99,4.99,49.99])
 sortedPrices = np.sort(prices)
 print(sortedPrices[3:])
-print
 print(f'Top 3 Price Stats\nMean: {sortedPrices.mean()}\nMin: {sortedPrices.min()}\nMax: {sortedPrices.max()}\nMedian: {round(np.median(sortedPrices[3:]),2)}' )
 
 price_tiers = np.array(["budget", "budget", "mid-tier", "luxury", "mid-tier", "luxury"])
