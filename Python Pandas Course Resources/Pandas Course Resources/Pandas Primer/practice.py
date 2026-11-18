@@ -162,20 +162,34 @@ Inverse Membership    not in          ~.isin()
 Inverse                               ~ the '~' inverts boolean values
 _________________________________________________________________
 '''
-print(sales_series == 5)    #Python Operator
-print(sales_series.eq(5))   #Pandas Method
+# print(sales_series == 5)    #Python Operator
+# print(sales_series.eq(5))   #Pandas Method
 
-print(sales_series.index.isin(['coffee','tea']))
-print(~sales_series.index.isin(['coffee','tea']))
+# print(sales_series.index.isin(['coffee','tea']))
+# print(~sales_series.index.isin(['coffee','tea']))
 
-print(sales_series.gt(2))
-print(~sales_series.gt(2))
-print(sales_series.loc[sales_series > 2])
-print(sales_series.loc[~(sales_series > 2)])
+# print(sales_series.gt(2))
+# print(~sales_series.gt(2))
+# print(sales_series.loc[sales_series > 2])
+# print(sales_series.loc[~(sales_series > 2)])
 
 '''
 Sorting Series
 _____________________________________________________________
+You can sort Seris by their values or their index
+
+1. The .sort_values() method sorts a Series by its values in 
+  ascending order
+2. The .sort_index() method sorts a Series by its values in 
+  ascending order
+3. The .sort_values(ascending= False) method sorts a Series by
+  by its values in descending order
+
 
 _________________________________________________________________
 '''
+
+print(sales_series.sort_values())
+print(sales_series.sort_values(ascending= False))
+print(sales_series.sort_index())
+print(sales_series.sort_index(ascending= False))

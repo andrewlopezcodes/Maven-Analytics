@@ -52,7 +52,48 @@ dates = pd.Series(oil["date"]).iloc[1000:1100]
 
 
 oil_series.index = dates
-print(oil_series)
-print(f'First10 Mean: {round(oil_series.iloc[:10].mean(),2)}')
-print(f'Last10 Mean: {round(oil_series.iloc[-10:].mean(),2)}')
-print(oil_series.loc["2017-01-01":"2017-01-07"].reset_index(drop=True))
+# print(oil_series)
+# print(f'First10 Mean: {round(oil_series.iloc[:10].mean(),2)}')
+# print(f'Last10 Mean: {round(oil_series.iloc[-10:].mean(),2)}')
+# print(oil_series.loc["2017-01-01":"2017-01-07"].reset_index(drop=True))
+
+
+'''
+ Assignment 3: Sorting and Filtering Series
+_______________________________________________________________________
+* First, get the 10 lowest prices from the data. 
+
+* Sort the 10 lowest prices by date, starting with the most recent and 
+  ending with the oldest price.
+
+* Finally, use the list of provided dates. Select only rows with these 
+  dates that had a price of less than 50 dollars per barrel.
+
+  dates = [
+    "2016-12-22",
+    "2017-05-03",
+    "2017-01-06",
+    "2017-03-05",
+    "2017-02-12",
+    "2017-03-21",
+    "2017-04-14",
+    "2017-04-15",
+]
+_________________________________________________________________________
+'''
+
+print(oil_series.sort_values()[:10])
+print(oil_series.sort_values()[:10].sort_index(ascending=False))
+
+dates = [
+    "2016-12-22",
+    "2017-05-03",
+    "2017-01-06",
+    "2017-03-05",
+    "2017-02-12",
+    "2017-03-21",
+    "2017-04-14",
+    "2017-04-15",
+]
+mask = (oil_series.index.isin(dates)) & (oil_series < 50)
+print(oil_series.loc[mask]) 
