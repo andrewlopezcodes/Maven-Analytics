@@ -189,7 +189,113 @@ You can sort Seris by their values or their index
 _________________________________________________________________
 '''
 
-print(sales_series.sort_values())
-print(sales_series.sort_values(ascending= False))
-print(sales_series.sort_index())
-print(sales_series.sort_index(ascending= False))
+# print(sales_series.sort_values())
+# print(sales_series.sort_values(ascending= False))
+# print(sales_series.sort_index())
+# print(sales_series.sort_index(ascending= False))
+
+'''
+Arithmetic Operators & Methods
+_____________________________________________________________
+You can use these operators & methods to perform numeric 
+operations on Series
+
+Description           Python Operator   Pandas Method
+----------------------------------------------
+Addition              +                 .add
+subtraction           -                 .sub() or .subtract()
+Multiplication        *                 .mul() or .multiply()
+Division              /                 .div() or .divide() or truediv()
+Floor Division        //                .floordiv()
+Modulo                %                 .mod()
+Exponentiation        **                .pow()
+_________________________________________________________________
+'''
+
+monday_sales = pd.Series([0,5,155,0,518])
+
+# print(monday_sales)
+# print(monday_sales + 2)
+# print(monday_sales.add(2))
+
+# print("$"+ monday_sales.astype("float").astype('string'))
+
+my_series = pd.Series(
+  [1,np.nan,2,3,4], 
+  index=['day 0','day 1','day 2','day 3','day 4']
+  )
+
+
+print(my_series)
+print(my_series + 1)
+print(my_series.add(1))
+print(my_series.add(1, fill_value=0))       # *code explain*  -> 'fill_value=0' will replace any missing value
+                                            #                     with a value of '0' which will allow the 
+                                            #                     '.add' operator to process 
+
+my_series2 = my_series.add(1, fill_value=0).astype('int')
+print(my_series2 /2)
+print(my_series.add(my_series2, fill_value=0))
+
+'''
+String Methods
+_____________________________________________________________
+The Pandas str accessor lets you access many string methods
+  - These methods all return a Series (split returns multiple series)
+
+String Method                     Python Operator   Pandas Method
+-------------------------------------------------------
+
+.strip(), .lstrip(),.rstrip()                 Removes all leading and/or trailing characters
+                                              (spaces by default)
+
+.upper(), .lower()                            Converts all characters to upper or lower case
+
+.slice(start:stop:step)                       Applies a slice to the strings in a Series
+
+.count("string")                              Counts all instances of a given string
+
+.contains("string")                           Returns True if a given string is found; False if not
+
+.replace("a", "b")                            Replaces instances of string "a" with string "b"
+
+.split("delimiter", expand=True)              Splits strings based on a given delimiter string, and
+                                              returns a DataFrame with a Series for each split
+
+.len()                                        Returns the length of each string in a Series
+
+.startswith("string"), .endswith("string")    Returns True if a string starts or ends with given
+                                              string; False if not
+_________________________________________________________________
+'''
+
+prices = pd.Series(['$3.99','$5.99','$22.99','$7.99','$33.99'])
+print(prices)
+
+print(prices.str.contains('3'))
+
+clean = prices.str.strip('$').astype("float")
+print(clean)
+
+string_series = pd.Series(['day 0','day 1','day 2','day 3','day 4'])
+
+print(string_series.str[-1])                          # returns ->  0    0      *code explain*  -> .str is called the StrDescriptor
+                                                      #             1    1                          it forces the 'str' properties onto
+                                                      #             2    2                          the values of a pandas series index.
+                                                      #             3    3                          ex: the value 123 in ('int') -> "123" in ('str')
+                                                      #             4    4
+                                                      #             dtype: str
+
+print(string_series.str.split(" "))                   # returns ->  0    [day, 0]
+                                                      #             1    [day, 1]
+                                                      #             2    [day, 2]
+                                                      #             3    [day, 3]
+                                                      #             4    [day, 4]
+                                                      #             dtype: object
+
+print(string_series.str.split(" ", expand=True))      # returns ->       0  1
+                                                      #             0  day  0
+                                                      #             1  day  1
+                                                      #             2  day  2
+                                                      #             3  day  3
+                                                      #             4  day  4
