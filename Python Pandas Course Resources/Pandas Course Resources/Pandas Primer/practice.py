@@ -103,6 +103,7 @@ The .loc[] method is the preferred way to access values by their custom labels
              | "pizza" (single row)
              | ['my','pie'](mlty.row)
              | ['jan':'dec'](range) 
+_________________________________________________________________
 '''
 # items = ['coffee', 'bananas', 'tea', 'coconut', 'sugar']
 # sales = [0,5,155,0,518]
@@ -118,7 +119,63 @@ The .loc[] method is the preferred way to access values by their custom labels
 #                                                         #             sugar      518
 #                                                         #             Name: Sales, dtype: int64
 
-print(sales_series.reset_index(drop=True))
+# print(sales_series.reset_index(drop=True))
 
 
 
+'''
+Filtering Series
+_____________________________________________________________
+You can filter a Series by passing a logical test into the .loc[]
+accessor like arrays
+
+sales_series.loc[sales_series > 0]
+_________________________________________________________________
+'''
+sales = [0,5,155,0,518]
+items = ['coffee', 'coffee', 'tea','coconut','sugar']
+sales_series = pd.Series(sales, index=items, name="Sales")
+# print(sales_series)
+# print(sales_series.loc["coffee"])
+
+
+# print(sales_series.loc[sales_series > 0])
+mask = (sales_series > 0) & (sales_series.index == "coffee")
+# print(sales_series.loc[mask])
+
+'''
+Logical Operators & Methods
+_____________________________________________________________
+You can use these operators & methods to create boolean filters
+for logical test
+
+Description           Python Operator   Pandas Method
+----------------------------------------------
+Equal                 ==              .eq()
+Not Equal             !=              .ne()
+Less Than or Equal    <=              .le()
+Less Than             <               .lt()
+Greater Than or Equal >=              .ge()
+Greater Than          >               .gt()
+Membership Test       in              .isin()
+Inverse Membership    not in          ~.isin() 
+Inverse                               ~ the '~' inverts boolean values
+_________________________________________________________________
+'''
+print(sales_series == 5)    #Python Operator
+print(sales_series.eq(5))   #Pandas Method
+
+print(sales_series.index.isin(['coffee','tea']))
+print(~sales_series.index.isin(['coffee','tea']))
+
+print(sales_series.gt(2))
+print(~sales_series.gt(2))
+print(sales_series.loc[sales_series > 2])
+print(sales_series.loc[~(sales_series > 2)])
+
+'''
+Sorting Series
+_____________________________________________________________
+
+_________________________________________________________________
+'''
