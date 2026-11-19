@@ -226,16 +226,16 @@ my_series = pd.Series(
   )
 
 
-print(my_series)
-print(my_series + 1)
-print(my_series.add(1))
-print(my_series.add(1, fill_value=0))       # *code explain*  -> 'fill_value=0' will replace any missing value
-                                            #                     with a value of '0' which will allow the 
-                                            #                     '.add' operator to process 
+# print(my_series)
+# print(my_series + 1)
+# print(my_series.add(1))
+# print(my_series.add(1, fill_value=0))       # *code explain*  -> 'fill_value=0' will replace any missing value
+#                                             #                     with a value of '0' which will allow the 
+#                                             #                     '.add' operator to process 
 
 my_series2 = my_series.add(1, fill_value=0).astype('int')
-print(my_series2 /2)
-print(my_series.add(my_series2, fill_value=0))
+# print(my_series2 /2)
+# print(my_series.add(my_series2, fill_value=0))
 
 '''
 String Methods
@@ -270,32 +270,66 @@ _________________________________________________________________
 '''
 
 prices = pd.Series(['$3.99','$5.99','$22.99','$7.99','$33.99'])
-print(prices)
+# print(prices)
 
-print(prices.str.contains('3'))
+# print(prices.str.contains('3'))
 
 clean = prices.str.strip('$').astype("float")
-print(clean)
+# print(clean)
 
 string_series = pd.Series(['day 0','day 1','day 2','day 3','day 4'])
 
-print(string_series.str[-1])                          # returns ->  0    0      *code explain*  -> .str is called the StrDescriptor
-                                                      #             1    1                          it forces the 'str' properties onto
-                                                      #             2    2                          the values of a pandas series index.
-                                                      #             3    3                          ex: the value 123 in ('int') -> "123" in ('str')
-                                                      #             4    4
-                                                      #             dtype: str
+# print(string_series.str[-1])                          # returns ->  0    0      *code explain*  -> .str is called the StrDescriptor
+#                                                       #             1    1                          it forces the 'str' properties onto
+#                                                       #             2    2                          the values of a pandas series index.
+#                                                       #             3    3                          ex: the value 123 in ('int') -> "123" in ('str')
+#                                                       #             4    4
+#                                                       #             dtype: str
 
-print(string_series.str.split(" "))                   # returns ->  0    [day, 0]
-                                                      #             1    [day, 1]
-                                                      #             2    [day, 2]
-                                                      #             3    [day, 3]
-                                                      #             4    [day, 4]
-                                                      #             dtype: object
+# print(string_series.str.split(" "))                   # returns ->  0    [day, 0]
+#                                                       #             1    [day, 1]
+#                                                       #             2    [day, 2]
+#                                                       #             3    [day, 3]
+#                                                       #             4    [day, 4]
+#                                                       #             dtype: object
 
-print(string_series.str.split(" ", expand=True))      # returns ->       0  1
-                                                      #             0  day  0
-                                                      #             1  day  1
-                                                      #             2  day  2
-                                                      #             3  day  3
-                                                      #             4  day  4
+# print(string_series.str.split(" ", expand=True))      # returns ->       0  1
+#                                                       #             0  day  0
+#                                                       #             1  day  1
+#                                                       #             2  day  2
+#                                                       #             3  day  3
+#                                                       #             4  day  4
+
+
+'''
+Numeric Series Aggregation Methods
+_____________________________________________________________
+You can use these methods to aggregate numerical Series
+
+String Method             Description
+-------------------------------------------------------
+.count()                  Returns the number of items
+
+.first(), .last()         Returns the first or last item
+
+.mean(), .median()        Calculates the mean or median
+
+.min(), .max()            Returns the smallest or largest value
+
+.argmax(), .argmin()      Returns the index for the smallest or largest values
+
+.std(), .var()            Calculates the standard deviation or variance
+
+.mad()                    Calculates the mean absolute deviation
+
+.prod()                   Calculates the product of all the items
+
+.sum()                    Calculates the sum of all the items
+
+.quantile()               Returns a specified percentile, or list of percentiles
+_________________________________________________________________
+'''
+sales_series.loc['coconut'] = np.nan
+print(sales_series)
+print(sales_series.sum())
+print(sales_series.loc['coffee'].sum())
