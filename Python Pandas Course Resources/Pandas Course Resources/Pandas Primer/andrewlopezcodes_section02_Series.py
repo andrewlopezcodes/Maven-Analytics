@@ -97,3 +97,24 @@ dates = [
 ]
 mask = (oil_series.index.isin(dates)) & (oil_series < 50)
 print(oil_series.loc[mask]) 
+
+
+'''
+ Assignment 4: Series Operations
+_______________________________________________________________________
+
+* Increase the prices in the oil series by 10%, and add an additional 2 
+  dollars per barrel on top of that.
+
+* Then, create a series that represents the difference between each 
+  price and max price.
+
+* Finally, extract the month from the string dates in the index and 
+  store them as an integer in their own series.
+_________________________________________________________________________
+'''
+
+print(oil_series.mul(1.10).add(2))
+print(f"{(oil_series - oil_series.max())/oil_series.max()}")
+newIndex = pd.Series(oil_series.index.str[5:7].astype('int64'))
+print(newIndex)
