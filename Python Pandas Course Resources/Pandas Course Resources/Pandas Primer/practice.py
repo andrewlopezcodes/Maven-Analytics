@@ -330,6 +330,13 @@ String Method             Description
 _________________________________________________________________
 '''
 sales_series.loc['coconut'] = np.nan
-print(sales_series)
-print(sales_series.sum())
-print(sales_series.loc['coffee'].sum())
+# print(sales_series)
+# print(sales_series.sum())
+# print(sales_series.loc['coffee'].sum())
+# print(sales_series.quantile([.25,.5,.75]))
+
+transactions = pd.read_csv("C:\\Users\\sneak\\Desktop\\Maven Analytics\\Python Pandas Course Resources\\Pandas Course Resources\\Pandas Primer\\transactions.csv")
+transactions_series = pd.Series(transactions['transactions'])
+print(transactions_series.iloc[:5])
+print(transactions_series.count())
+print(transactions_series.iloc[:5].quantile([.5]))
