@@ -466,24 +466,57 @@ sales_series = pd.Series(sales, name="Sales")
 
 sales = [0,5,155,pd.NA,518]
 sales_series = pd.Series(sales, name="Sales", dtype="Int16") 
-print(sales_series)                                 # returns ->  0     0
-                                                    #             1     5
-                                                    #             2     155
-                                                    #             3     <NA>
-                                                    #             4     518
-                                                    #             Name: Sales, dtype: Int16 
+# print(sales_series)                                 # returns ->  0     0
+#                                                     #             1     5
+#                                                     #             2     155
+#                                                     #             3     <NA>
+#                                                     #             4     518
+#                                                     #             Name: Sales, dtype: Int16 
 
-print(sales_series.add(2, fill_value=0))            # returns ->  0      2                        *code explain*  ->  the 'fill_value=0' replaces
-                                                    #             1      7                                            the value of item 3 "<NA>" with
-                                                    #             2    157                                            the integer 0, which allows the
-                                                    #             3      2                                            "add(2,)" to do addition, which 
-                                                    #             4    520                                            turns the item 3 into integer 2
-                                                    #             Name: Sales, dtype: Int16
+# print(sales_series.add(2, fill_value=0))            # returns ->  0      2                        *code explain*  ->  the 'fill_value=0' replaces
+#                                                     #             1      7                                            the value of item 3 "<NA>" with
+#                                                     #             2    157                                            the integer 0, which allows the
+#                                                     #             3      2                                            "add(2,)" to do addition, which 
+#                                                     #             4    520                                            turns the item 3 into integer 2
+#                                                     #             Name: Sales, dtype: Int16
  
 '''
 Identifying Missing Data
 _________________________________________________________________
 
+The .isna() and .value_counts() methods let you identify missing
+data in a Series
+  - The .isna() method returns True if a value is missing, and False
+    otherwise
+  
+    checklist = pd.Series(['COMPLETE',NaN,NaN,NaN,'COMPLETE'])
+    print(checklist)                                  returns ->  0     COMPLETE
+                                                                  1     NaN
+                                                                  2     NaN
+                                                                  3     NaN
+                                                                  4     COMPLETE
+                                                                  dtype: str
 
+    print(checklist.isna())                           returns ->  0     False
+                                                                  1     True
+                                                                  2     True
+                                                                  3     True
+                                                                  4     False
+                                                                  dtype: bool
+
+  - If you want a count of "NaN" or "<NA>" values use the
+    .sum() or .values_counts() method
+
+    print(checklist.isna().sum())                       returns ->    3
+
+
+    print(checklist.value_counts(dropna=False))         returns ->    NaN       3
+                                                                      COMPLETE  2
+                                                                      Name: count, dtype: int64
 _________________________________________________________________
 '''
+checklist = pd.Series(['COMPLETE',np.nan,np.nan,np.nan,'COMPLETE'])
+print(checklist)
+print(checklist.isna())
+print(checklist.isna().sum())
+print(checklist.value_counts(dropna=False))
