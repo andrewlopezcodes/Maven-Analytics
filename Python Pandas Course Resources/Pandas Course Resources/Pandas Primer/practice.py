@@ -358,7 +358,7 @@ unique()                  Returns an array of unique items in a Series
 _________________________________________________________________
 '''
 items = pd.Series(['coffee', 'coffee', 'tea','coconut','sugar'])
-print(items)                                            # returns ->  0     coffee
+# print(items)                                            # returns ->  0     coffee
                                                         #             1     coffee
                                                         #             2        tea
                                                         #             3    coconut
@@ -366,37 +366,124 @@ print(items)                                            # returns ->  0     coff
                                                         #             dtype: str  
 
 
-print(items.value_counts())                             # returns ->  coffee     2                        *code explain*  -> returns how many of each 
-                                                        #             tea        1                                           items are in the series
-                                                        #             coconut    1
-                                                        #             sugar      1
-                                                        #             Name: count, dtype: int64
+# print(items.value_counts())                             # returns ->  coffee     2                        *code explain*  -> returns how many of each 
+#                                                         #             tea        1                                           items are in the series
+#                                                         #             coconut    1
+#                                                         #             sugar      1
+#                                                         #             Name: count, dtype: int64
 
-print(items.value_counts(normalize=True))               # returns ->  coffee     0.4                      # *code explain*  -> Returns the percentage of
-                                                        #             tea        0.2                                           each item's value occurrence in
-                                                        #             coconut    0.2                                           the series (ex:  coffee   0.4  = 40%)
-                                                        #             sugar      0.2                                                            tea      0.2  = 20% 
-                                                        #             Name: proportion, dtype: float64
-
-
-print(pd.Series.astype('int' or 'str' or 'float').value_counts(normalze=True))                         # *code explain*  -> takes in a series where the value is
-                                                        #                                                                    a datatype and using astype() method
-                                                        #                                                                    converts it to another data type for
-                                                        #                                                                    calculations.
-                                                        #                                                                    Then the .value_counts(normalize=True)
-                                                        #                                                                    returns the percentage of each values
-                                                        #                                                                    occurrence in the series
-                                                        #    
-                                                        #                                                                    ex: value is '16' 
-                                                        #                                                                    astype('int')    -> 16
-                                                        #                                                                    astype('float')  -> 16.0
+# print(items.value_counts(normalize=True))               # returns ->  coffee     0.4                      # *code explain*  -> Returns the percentage of
+#                                                         #             tea        0.2                                           each item's value occurrence in
+#                                                         #             coconut    0.2                                           the series (ex:  coffee   0.4  = 40%)
+#                                                         #             sugar      0.2                                                            tea      0.2  = 20% 
+#                                                         #             Name: proportion, dtype: float64
 
 
-print(items.unique())                                     # returns ->  0     coffee                        *code explain*  -> returns a pandas array with the 
-                                                          #             1     coffee                                           index position and .
-                                                          #             2        tea                                           <StringArray>['coffee','tea','coconut','sugar']
-                                                          #             3    coconut
-                                                          #             4      sugar
-                                                          #             dtype: str>
+# print(pd.Series.astype('int' or 'str' or 'float').value_counts(normalze=True))                         # *code explain*  -> takes in a series where the value is
+#                                                         #                                                                    a datatype and using astype() method
+#                                                         #                                                                    converts it to another data type for
+#                                                         #                                                                    calculations.
+#                                                         #                                                                    Then the .value_counts(normalize=True)
+#                                                         #                                                                    returns the percentage of each values
+#                                                         #                                                                    occurrence in the series
+#                                                         #    
+#                                                         #                                                                    ex: value is '16' 
+#                                                         #                                                                    astype('int')    -> 16
+#                                                         #                                                                    astype('float')  -> 16.0
 
-print(items.nunique())                                   # returns ->  Length: 4, dtype: str
+
+# print(items.unique())                                     # returns ->  0     coffee                        *code explain*  -> returns a pandas array with the 
+#                                                           #             1     coffee                                           index position and .
+#                                                           #             2        tea                                           <StringArray>['coffee','tea','coconut','sugar']
+#                                                           #             3    coconut
+#                                                           #             4      sugar
+#                                                           #             dtype: str>
+
+# print(items.nunique())                                   # returns ->  Length: 4, dtype: str
+
+
+
+'''
+  Missing Data
+_________________________________________________________________
+
+Missing data in Pandas is often represented by MymPy "NaN" values
+  - This is more efficient than Python's "None" data type
+  - Pandas treats NaN values as a float, which allows them to be 
+    used in vectorized operations
+
+    sales = [0,5,155,np.nan,518]
+    sales_series = pd.Series(sales, name="Sales") 
+    returns ->  0     0.0
+                1     5.0
+                2     155.0
+                3     NaN  
+                4     518.0
+                Name: Sales, dtype: float64
+
+  - Most operation methods include a "fill_value" argument that lets
+    you pass a value instead of NaN
+
+    sales_series.add(0, fill_value=0)
+    returns ->  0     0.0
+                1     5.0
+                2     155.0
+                3     0.0
+                4     518.0
+                Name: Sales, dtype:float
+
+Pandas released its own missing data type, <NA>, in December 2020
+  - This allows missing values to be stored as integers, instead of 
+    needing to convert to float
+  - This is still a new feature, but most bugs end up converting the
+    data to NumPy's NaN
+
+    sales = [0,5,155,pd.NA,518]
+    sales_series = pd.Series(sales, name="Sales", dtype="Int16") 
+    returns ->  0     0.0
+                1     5.0
+                2     155.0
+                3     <NA>
+                4     518.0
+                Name: Sales, dtype: Int16    
+_________________________________________________________________
+'''
+sales = [0,5,155,np.nan,518]
+sales_series = pd.Series(sales, name="Sales")
+# print(sales_series)                               # return  ->  0      0.0
+#                                                   #             1      5.0
+#                                                   #             2    155.0
+#                                                   #             3      NaN
+#                                                   #             4    518.0
+#                                                   #             Name: Sales, dtype: float64
+
+# print(sales_series.add(2, fill_value=0))          # return  ->  0      2.0                        *code explain*  ->  the 'fill_value=0' replaces
+#                                                   #             1      7.0                                            the value of item 3 "NaN" with
+#                                                   #             2    157.0                                            the float 0.0, which allows the
+#                                                   #             3      2.0                                            "add(2,)" to do addition, which 
+#                                                   #             4    520.0                                            turns the item 3 into float 2.0
+#                                                   #             Name: Sales, dtype: float64
+
+sales = [0,5,155,pd.NA,518]
+sales_series = pd.Series(sales, name="Sales", dtype="Int16") 
+print(sales_series)                                 # returns ->  0     0
+                                                    #             1     5
+                                                    #             2     155
+                                                    #             3     <NA>
+                                                    #             4     518
+                                                    #             Name: Sales, dtype: Int16 
+
+print(sales_series.add(2, fill_value=0))            # returns ->  0      2                        *code explain*  ->  the 'fill_value=0' replaces
+                                                    #             1      7                                            the value of item 3 "<NA>" with
+                                                    #             2    157                                            the integer 0, which allows the
+                                                    #             3      2                                            "add(2,)" to do addition, which 
+                                                    #             4    520                                            turns the item 3 into integer 2
+                                                    #             Name: Sales, dtype: Int16
+ 
+'''
+Identifying Missing Data
+_________________________________________________________________
+
+
+_________________________________________________________________
+'''
