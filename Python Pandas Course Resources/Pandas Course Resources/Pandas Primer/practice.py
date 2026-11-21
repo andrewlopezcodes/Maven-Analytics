@@ -327,6 +327,8 @@ String Method             Description
 .sum()                    Calculates the sum of all the items
 
 .quantile()               Returns a specified percentile, or list of percentiles
+
+.quartile()               Returns a quantile sorted into Q1(0.25), Q2/Median(0.50), Q3(0.75)
 _________________________________________________________________
 '''
 sales_series.loc['coconut'] = np.nan
@@ -337,6 +339,64 @@ sales_series.loc['coconut'] = np.nan
 
 transactions = pd.read_csv("C:\\Users\\sneak\\Desktop\\Maven Analytics\\Python Pandas Course Resources\\Pandas Course Resources\\Pandas Primer\\transactions.csv")
 transactions_series = pd.Series(transactions['transactions'])
-print(transactions_series.iloc[:5])
-print(transactions_series.count())
-print(transactions_series.iloc[:5].quantile([.5]))
+# print(transactions_series.iloc[:5])
+# print(transactions_series.count())
+# print(transactions_series.iloc[:5].quantile([.5]))
+
+
+
+'''
+Categorical Series Aggregation Methods
+_____________________________________________________________
+You can use these methods to aggregate and analyze categorical Series
+
+String Method             Description
+-------------------------------------------------------
+unique()                  Returns an array of unique items in a Series
+.nunique()                Returns the number of unique items
+.value_counts()           Returns a Series of unique items and their frequency
+_________________________________________________________________
+'''
+items = pd.Series(['coffee', 'coffee', 'tea','coconut','sugar'])
+print(items)                                            # returns ->  0     coffee
+                                                        #             1     coffee
+                                                        #             2        tea
+                                                        #             3    coconut
+                                                        #             4      sugar
+                                                        #             dtype: str  
+
+
+print(items.value_counts())                             # returns ->  coffee     2                        *code explain*  -> returns how many of each 
+                                                        #             tea        1                                           items are in the series
+                                                        #             coconut    1
+                                                        #             sugar      1
+                                                        #             Name: count, dtype: int64
+
+print(items.value_counts(normalize=True))               # returns ->  coffee     0.4                      # *code explain*  -> Returns the percentage of
+                                                        #             tea        0.2                                           each item's value occurrence in
+                                                        #             coconut    0.2                                           the series (ex:  coffee   0.4  = 40%)
+                                                        #             sugar      0.2                                                            tea      0.2  = 20% 
+                                                        #             Name: proportion, dtype: float64
+
+
+print(pd.Series.astype('int' or 'str' or 'float').value_counts(normalze=True))                         # *code explain*  -> takes in a series where the value is
+                                                        #                                                                    a datatype and using astype() method
+                                                        #                                                                    converts it to another data type for
+                                                        #                                                                    calculations.
+                                                        #                                                                    Then the .value_counts(normalize=True)
+                                                        #                                                                    returns the percentage of each values
+                                                        #                                                                    occurrence in the series
+                                                        #    
+                                                        #                                                                    ex: value is '16' 
+                                                        #                                                                    astype('int')    -> 16
+                                                        #                                                                    astype('float')  -> 16.0
+
+
+print(items.unique())                                     # returns ->  0     coffee                        *code explain*  -> returns a pandas array with the 
+                                                          #             1     coffee                                           index position and .
+                                                          #             2        tea                                           <StringArray>['coffee','tea','coconut','sugar']
+                                                          #             3    coconut
+                                                          #             4      sugar
+                                                          #             dtype: str>
+
+print(items.nunique())                                   # returns ->  Length: 4, dtype: str

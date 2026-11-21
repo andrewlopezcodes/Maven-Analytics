@@ -82,8 +82,8 @@ _______________________________________________________________________
 _________________________________________________________________________
 '''
 
-print(oil_series.sort_values()[:10])
-print(oil_series.sort_values()[:10].sort_index(ascending=False))
+# print(oil_series.sort_values()[:10])
+# print(oil_series.sort_values()[:10].sort_index(ascending=False))
 
 dates = [
     "2016-12-22",
@@ -96,7 +96,7 @@ dates = [
     "2017-04-15",
 ]
 mask = (oil_series.index.isin(dates)) & (oil_series < 50)
-print(oil_series.loc[mask]) 
+# print(oil_series.loc[mask]) 
 
 
 '''
@@ -114,7 +114,36 @@ _______________________________________________________________________
 _________________________________________________________________________
 '''
 
-print(oil_series.mul(1.10).add(2))
-print(f"{(oil_series - oil_series.max())/oil_series.max()}")
-newIndex = pd.Series(oil_series.index.str[5:7].astype('int64'))
-print(newIndex)
+# print(oil_series.mul(1.10).add(2))
+# print(f"{(oil_series - oil_series.max())/oil_series.max()}")
+# newIndex = pd.Series(oil_series.index.str[5:7].astype('int64'))
+# print(newIndex)
+
+
+'''
+# Assignment 5: Series Aggregations
+_______________________________________________________________________
+
+* Calculate the sum and mean of prices in the month of March. 
+
+* Next, calculate how many prices were recorded in January and February.
+
+* Then, calculate the 10th and 90th percentiles across all data.
+
+* Finally, how often did integer dollar value (e.g. 51, 52) occur in the 
+  data? Normalize this to a percentage.
+_______________________________________________________________________
+
+'''
+march = (oil_series.index.str.contains('2017-03'))
+# print(oil_series.loc[march])
+# print(f'The sum of Oil Sales for March is: ${round(oil_series.iloc[march].sum(),2)}')
+# print(f'The mean of Oil Sales for March is: ${round(oil_series.iloc[march].mean(),2)}')
+
+janAndFeb = (oil_series.index.str.contains('2017-01') | oil_series.index.str.contains('2017-02'))
+# print(oil_series.loc[janAndFeb])
+# print(oil_series.loc[janAndFeb].count())
+
+print(oil_series.quantile([.1 , .9]))
+
+print(oil_series.astype('int').value_counts(normalize=True))
