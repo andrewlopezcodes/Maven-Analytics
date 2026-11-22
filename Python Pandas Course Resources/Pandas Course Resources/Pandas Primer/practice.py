@@ -516,7 +516,49 @@ data in a Series
 _________________________________________________________________
 '''
 checklist = pd.Series(['COMPLETE',np.nan,np.nan,np.nan,'COMPLETE'])
-print(checklist)
-print(checklist.isna())
-print(checklist.isna().sum())
-print(checklist.value_counts(dropna=False))
+# print(checklist)
+# print(checklist.isna())
+# print(checklist.isna().sum())
+# print(checklist.value_counts(dropna=False))
+
+'''
+HANDLING MISSING DATA
+_________________________________________________________________
+The .dropna() and .fillna() methods let you handle missing data in 
+a Series
+  - The .dropna() method removes NaN values from your Series or DataFrame
+
+    checklist = pd.Series(['COMPLETE',np.nan, np.nan, np.nan, 'COMPLETE'])
+    print(checklist)                                  returns ->  0     COMPLETE
+                                                                  1     NaN
+                                                                  2     NaN
+                                                                  3     NaN
+                                                                  4     COMPLETE
+                                                                  dtype: str  
+
+    print(checklist.dropna())                         returns ->    0    COMPLETE
+                                                                    4    COMPLETE
+                                                                    dtype: str
+
+  - The .fillna(value) method replaces NaN values with a specified value
+
+    checklist = pd.Series(['COMPLETE',np.nan, np.nan, np.nan, 'COMPLETE'])
+    print(checklist)                                  returns ->  0     COMPLETE
+                                                                  1     NaN
+                                                                  2     NaN
+                                                                  3     NaN
+                                                                  4     COMPLETE
+                                                                  dtype: str  
+
+    print(checklist.fillna("INCOMPLETE"))             returns ->    0      COMPLETE
+                                                                    1    INCOMPLETE
+                                                                    2    INCOMPLETE
+                                                                    3    INCOMPLETE
+                                                                    4      COMPLETE
+                                                                    dtype: str
+
+  
+_________________________________________________________________
+'''
+print(checklist.dropna())
+print(checklist.fillna("INCOMPLETE")) 

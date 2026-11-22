@@ -121,7 +121,7 @@ _________________________________________________________________________
 
 
 '''
-# Assignment 5: Series Aggregations
+ Assignment 5: Series Aggregations
 _______________________________________________________________________
 
 * Calculate the sum and mean of prices in the month of March. 
@@ -144,6 +144,27 @@ janAndFeb = (oil_series.index.str.contains('2017-01') | oil_series.index.str.con
 # print(oil_series.loc[janAndFeb])
 # print(oil_series.loc[janAndFeb].count())
 
-print(oil_series.quantile([.1 , .9]))
+# print(oil_series.quantile([.1 , .9]))
 
-print(oil_series.astype('int').value_counts(normalize=True))
+# print(oil_series.astype('int').value_counts(normalize=True))
+
+
+'''
+ Assignment 6: Missing Data
+_______________________________________________________________________
+
+There were some erroneous prices in our data, so they were filled in 
+with missing values.
+
+Can you confirm the number of missing values in the price column? 
+
+Once you’ve done that, fill the prices in with the median of the oil 
+price series.
+
+_______________________________________________________________________
+
+'''
+oil_series = oil_series.where(~oil_series.isin([51.44, 47.83]), pd.NA)
+print(oil_series.isna().sum())
+
+print(oil_series.fillna(oil_series.mean()))
