@@ -1,0 +1,700 @@
+import numpy as np
+import pandas as pd
+
+sales = [0,5,155,0,518,0,1827,616,317,325]
+
+sales_series = pd.Series(sales, name= "Sales")
+# print(sales_series)
+
+'''
+Pandas Series have these key properties:
+  values  -> the data array in the Series
+  index   -> the index array in the Series
+  name    -> the optional name for the Series (useful for accessing columns in a DataFrame)
+  dtype   -> the data type of the elements in the values array
+'''
+
+# print(f'Values: {sales_series.values}')
+# print(f'Index: {sales_series.index}')
+# print(f'Name: {sales_series.name}')
+# print(f'Data Type: {sales_series.dtype}')
+
+'''
+The Index
+___________________________________________________________
+The index lets you easily access "rows" in a Pandas Series or DataFrame
+'''
+sales = [0,5,155,0,518]
+sales_series =pd.Series(sales, name="sales")
+# print(sales_series)                         #returns -> # 0      0
+                                              # 1      5
+                                              # 2    155
+                                              # 3      0
+                                              # 4    518
+                                              # Name: sales, dtype: int64
+
+# print(sales[2])                             # indexing  returns -> 155
+# print(sales[2:4])                           # slicing   returns ->  2     155
+                                              #                       3     0
+                                              #                       Name: sales, dtype: int64
+
+'''
+Custom Indices
+___________________________________________________________
+
+There are cases where it's applicable to use a custom index for accessing rows
+'''
+
+items = ['coffee', 'bananas', 'tea', 'coconut', 'sugar']
+sales = [0,5,155,0,518]
+sales_series = pd.Series(sales, index=items, name='Sales')
+# print(sales_series)
+# print(f'The value at sales_series[\'tea\'] is: {sales_series['tea']}')
+
+# print(sales_series['bananas':'coconut'])                    # return -> bananas      5
+                                                            #           tea        155
+                                                            #           coconut      0
+                                                            #           Name: Sales, dtype: int64
+                                                            # *code explain*  -> when slicing with custom index makes the 
+                                                            #                     stop point "INCLUSIVE"
+
+'''
+The iloc Method
+_____________________________________________________________
+The .iloc[] method is the preferred way to access values by their positional index
+  - This method works even when Series have a custom, non-integer index
+  - It is more efficient than slicing and is recommended by Pandas' creators
+
+        df.iloc[row position, column position]
+         |           |                 |
+         V           V                 V
+      DataFrame  | The row position  | 
+       or Series | 
+'''
+
+# items = ['coffee', 'bananas', 'tea', 'coconut', 'sugar']
+# sales = [0,5,155,0,518]
+# sales_series = pd.Series(sales, index=items, name='Sales')
+
+# print(sales_series.iloc[2])                           # returns ->  155
+# print(sales_series.iloc[2:4])                         # returns ->  tea        155
+#                                                       #             coconut      0
+#                                                       #             Name: Sales, dtype: int64
+
+# print(sales_series.iloc[[1,3,4]])                     # returns ->  bananas      5
+#                                                       #             coconut      0
+#                                                       #             sugar      518
+#                                                       #             Name: Sales, dtype: int64
+
+'''
+The loc[] Method
+_____________________________________________________________
+The .loc[] method is the preferred way to access values by their custom labels
+
+  - This method works even when Series have a custom, non-integer index
+  - It is more efficient than slicing and is recommended by Pandas' creators
+
+        df.loc[row position, column position]
+         |           |                 |
+         V           V                 V
+  DataFrame  | The custom row       | 
+   or Series | for the values
+             | you want 2 access 
+             | "pizza" (single row)
+             | ['my','pie'](mlty.row)
+             | ['jan':'dec'](range) 
+_________________________________________________________________
+'''
+# items = ['coffee', 'bananas', 'tea', 'coconut', 'sugar']
+# sales = [0,5,155,0,518]
+# sales_series = pd.Series(sales, index=items, name='Sales')
+
+# print(sales_series.loc['tea'])                          # returns ->  155
+# print(sales_series.loc["bananas":"coconut"])            # returns ->  tea        155
+#                                                         #             coconut      0
+#                                                         #             Name: Sales, dtype: int64
+
+# print(sales_series.iloc[[1,3,4]])                       # returns ->  bananas      5
+#                                                         #             coconut      0
+#                                                         #             sugar      518
+#                                                         #             Name: Sales, dtype: int64
+
+# print(sales_series.reset_index(drop=True))
+
+
+
+'''
+Filtering Series
+_____________________________________________________________
+You can filter a Series by passing a logical test into the .loc[]
+accessor like arrays
+
+sales_series.loc[sales_series > 0]
+_________________________________________________________________
+'''
+sales = [0,5,155,0,518]
+items = ['coffee', 'coffee', 'tea','coconut','sugar']
+sales_series = pd.Series(sales, index=items, name="Sales")
+# print(sales_series)
+# print(sales_series.loc["coffee"])
+
+
+# print(sales_series.loc[sales_series > 0])
+mask = (sales_series > 0) & (sales_series.index == "coffee")
+# print(sales_series.loc[mask])
+
+'''
+Logical Operators & Methods
+_____________________________________________________________
+You can use these operators & methods to create boolean filters
+for logical test
+
+Description           Python Operator   Pandas Method
+----------------------------------------------
+Equal                 ==              .eq()
+Not Equal             !=              .ne()
+Less Than or Equal    <=              .le()
+Less Than             <               .lt()
+Greater Than or Equal >=              .ge()
+Greater Than          >               .gt()
+Membership Test       in              .isin()
+Inverse Membership    not in          ~.isin() 
+Inverse                               ~ the '~' inverts boolean values
+_________________________________________________________________
+'''
+# print(sales_series == 5)    #Python Operator
+# print(sales_series.eq(5))   #Pandas Method
+
+# print(sales_series.index.isin(['coffee','tea']))
+# print(~sales_series.index.isin(['coffee','tea']))
+
+# print(sales_series.gt(2))
+# print(~sales_series.gt(2))
+# print(sales_series.loc[sales_series > 2])
+# print(sales_series.loc[~(sales_series > 2)])
+
+'''
+Sorting Series
+_____________________________________________________________
+You can sort Seris by their values or their index
+
+1. The .sort_values() method sorts a Series by its values in 
+  ascending order
+2. The .sort_index() method sorts a Series by its values in 
+  ascending order
+3. The .sort_values(ascending= False) method sorts a Series by
+  by its values in descending order
+
+
+_________________________________________________________________
+'''
+
+# print(sales_series.sort_values())
+# print(sales_series.sort_values(ascending= False))
+# print(sales_series.sort_index())
+# print(sales_series.sort_index(ascending= False))
+
+'''
+Arithmetic Operators & Methods
+_____________________________________________________________
+You can use these operators & methods to perform numeric 
+operations on Series
+
+Description           Python Operator   Pandas Method
+----------------------------------------------
+Addition              +                 .add
+subtraction           -                 .sub() or .subtract()
+Multiplication        *                 .mul() or .multiply()
+Division              /                 .div() or .divide() or truediv()
+Floor Division        //                .floordiv()
+Modulo                %                 .mod()
+Exponentiation        **                .pow()
+_________________________________________________________________
+'''
+
+monday_sales = pd.Series([0,5,155,0,518])
+
+# print(monday_sales)
+# print(monday_sales + 2)
+# print(monday_sales.add(2))
+
+# print("$"+ monday_sales.astype("float").astype('string'))
+
+my_series = pd.Series(
+  [1,np.nan,2,3,4], 
+  index=['day 0','day 1','day 2','day 3','day 4']
+  )
+
+
+# print(my_series)
+# print(my_series + 1)
+# print(my_series.add(1))
+# print(my_series.add(1, fill_value=0))       # *code explain*  -> 'fill_value=0' will replace any missing value
+#                                             #                     with a value of '0' which will allow the 
+#                                             #                     '.add' operator to process 
+
+my_series2 = my_series.add(1, fill_value=0).astype('int')
+# print(my_series2 /2)
+# print(my_series.add(my_series2, fill_value=0))
+
+'''
+String Methods
+_____________________________________________________________
+The Pandas str accessor lets you access many string methods
+  - These methods all return a Series (split returns multiple series)
+
+String Method                     Python Operator   Pandas Method
+-------------------------------------------------------
+
+.strip(), .lstrip(),.rstrip()                 Removes all leading and/or trailing characters
+                                              (spaces by default)
+
+.upper(), .lower()                            Converts all characters to upper or lower case
+
+.slice(start:stop:step)                       Applies a slice to the strings in a Series
+
+.count("string")                              Counts all instances of a given string
+
+.contains("string")                           Returns True if a given string is found; False if not
+
+.replace("a", "b")                            Replaces instances of string "a" with string "b"
+
+.split("delimiter", expand=True)              Splits strings based on a given delimiter string, and
+                                              returns a DataFrame with a Series for each split
+
+.len()                                        Returns the length of each string in a Series
+
+.startswith("string"), .endswith("string")    Returns True if a string starts or ends with given
+                                              string; False if not
+_________________________________________________________________
+'''
+
+prices = pd.Series(['$3.99','$5.99','$22.99','$7.99','$33.99'])
+# print(prices)
+
+# print(prices.str.contains('3'))
+
+clean = prices.str.strip('$').astype("float")
+# print(clean)
+
+string_series = pd.Series(['day 0','day 1','day 2','day 3','day 4'])
+
+# print(string_series.str[-1])                          # returns ->  0    0      *code explain*  -> .str is called the StrDescriptor
+#                                                       #             1    1                          it forces the 'str' properties onto
+#                                                       #             2    2                          the values of a pandas series index.
+#                                                       #             3    3                          ex: the value 123 in ('int') -> "123" in ('str')
+#                                                       #             4    4
+#                                                       #             dtype: str
+
+# print(string_series.str.split(" "))                   # returns ->  0    [day, 0]
+#                                                       #             1    [day, 1]
+#                                                       #             2    [day, 2]
+#                                                       #             3    [day, 3]
+#                                                       #             4    [day, 4]
+#                                                       #             dtype: object
+
+# print(string_series.str.split(" ", expand=True))      # returns ->       0  1
+#                                                       #             0  day  0
+#                                                       #             1  day  1
+#                                                       #             2  day  2
+#                                                       #             3  day  3
+#                                                       #             4  day  4
+
+
+'''
+Numeric Series Aggregation Methods
+_____________________________________________________________
+You can use these methods to aggregate numerical Series
+
+String Method             Description
+-------------------------------------------------------
+.count()                  Returns the number of items
+
+.first(), .last()         Returns the first or last item
+
+.mean(), .median()        Calculates the mean or median
+
+.min(), .max()            Returns the smallest or largest value
+
+.argmax(), .argmin()      Returns the index for the smallest or largest values
+
+.std(), .var()            Calculates the standard deviation or variance
+
+.mad()                    Calculates the mean absolute deviation
+
+.prod()                   Calculates the product of all the items
+
+.sum()                    Calculates the sum of all the items
+
+.quantile()               Returns a specified percentile, or list of percentiles
+
+.quartile()               Returns a quantile sorted into Q1(0.25), Q2/Median(0.50), Q3(0.75)
+_________________________________________________________________
+'''
+sales_series.loc['coconut'] = np.nan
+# print(sales_series)
+# print(sales_series.sum())
+# print(sales_series.loc['coffee'].sum())
+# print(sales_series.quantile([.25,.5,.75]))
+
+transactions = pd.read_csv("C:\\Users\\sneak\\Desktop\\Maven Analytics\\Python Pandas Course Resources\\Pandas Course Resources\\Pandas Primer\\transactions.csv")
+transactions_series = pd.Series(transactions['transactions'])
+# print(transactions_series.iloc[:5])
+# print(transactions_series.count())
+print(transactions_series.iloc[:5].quantile([.5]))
+
+
+
+'''
+Categorical Series Aggregation Methods
+_____________________________________________________________
+You can use these methods to aggregate and analyze categorical Series
+
+String Method             Description
+-------------------------------------------------------
+unique()                  Returns an array of unique items in a Series
+.nunique()                Returns the number of unique items
+.value_counts()           Returns a Series of unique items and their frequency
+_________________________________________________________________
+'''
+items = pd.Series(['coffee', 'coffee', 'tea','coconut','sugar'])
+# print(items)                                            # returns ->  0     coffee
+                                                        #             1     coffee
+                                                        #             2        tea
+                                                        #             3    coconut
+                                                        #             4      sugar
+                                                        #             dtype: str  
+
+
+# print(items.value_counts())                             # returns ->  coffee     2                        *code explain*  -> returns how many of each 
+#                                                         #             tea        1                                           items are in the series
+#                                                         #             coconut    1
+#                                                         #             sugar      1
+#                                                         #             Name: count, dtype: int64
+
+# print(items.value_counts(normalize=True))               # returns ->  coffee     0.4                      # *code explain*  -> Returns the percentage of
+#                                                         #             tea        0.2                                           each item's value occurrence in
+#                                                         #             coconut    0.2                                           the series (ex:  coffee   0.4  = 40%)
+#                                                         #             sugar      0.2                                                            tea      0.2  = 20% 
+#                                                         #             Name: proportion, dtype: float64
+
+
+# print(pd.Series.astype('int' or 'str' or 'float').value_counts(normalze=True))                         # *code explain*  -> takes in a series where the value is
+#                                                         #                                                                    a datatype and using astype() method
+#                                                         #                                                                    converts it to another data type for
+#                                                         #                                                                    calculations.
+#                                                         #                                                                    Then the .value_counts(normalize=True)
+#                                                         #                                                                    returns the percentage of each values
+#                                                         #                                                                    occurrence in the series
+#                                                         #    
+#                                                         #                                                                    ex: value is '16' 
+#                                                         #                                                                    astype('int')    -> 16
+#                                                         #                                                                    astype('float')  -> 16.0
+
+
+# print(items.unique())                                     # returns ->  0     coffee                        *code explain*  -> returns a pandas array with the 
+#                                                           #             1     coffee                                           index position and .
+#                                                           #             2        tea                                           <StringArray>['coffee','tea','coconut','sugar']
+#                                                           #             3    coconut
+#                                                           #             4      sugar
+#                                                           #             dtype: str>
+
+# print(items.nunique())                                   # returns ->  Length: 4, dtype: str
+
+
+
+'''
+  Missing Data
+_________________________________________________________________
+
+Missing data in Pandas is often represented by MymPy "NaN" values
+  - This is more efficient than Python's "None" data type
+  - Pandas treats NaN values as a float, which allows them to be 
+    used in vectorized operations
+
+    sales = [0,5,155,np.nan,518]
+    sales_series = pd.Series(sales, name="Sales") 
+    returns ->  0     0.0
+                1     5.0
+                2     155.0
+                3     NaN  
+                4     518.0
+                Name: Sales, dtype: float64
+
+  - Most operation methods include a "fill_value" argument that lets
+    you pass a value instead of NaN
+
+    sales_series.add(0, fill_value=0)
+    returns ->  0     0.0
+                1     5.0
+                2     155.0
+                3     0.0
+                4     518.0
+                Name: Sales, dtype:float
+
+Pandas released its own missing data type, <NA>, in December 2020
+  - This allows missing values to be stored as integers, instead of 
+    needing to convert to float
+  - This is still a new feature, but most bugs end up converting the
+    data to NumPy's NaN
+
+    sales = [0,5,155,pd.NA,518]
+    sales_series = pd.Series(sales, name="Sales", dtype="Int16") 
+    returns ->  0     0.0
+                1     5.0
+                2     155.0
+                3     <NA>
+                4     518.0
+                Name: Sales, dtype: Int16    
+_________________________________________________________________
+'''
+sales = [0,5,155,np.nan,518]
+sales_series = pd.Series(sales, name="Sales")
+# print(sales_series)                               # return  ->  0      0.0
+#                                                   #             1      5.0
+#                                                   #             2    155.0
+#                                                   #             3      NaN
+#                                                   #             4    518.0
+#                                                   #             Name: Sales, dtype: float64
+
+# print(sales_series.add(2, fill_value=0))          # return  ->  0      2.0                        *code explain*  ->  the 'fill_value=0' replaces
+#                                                   #             1      7.0                                            the value of item 3 "NaN" with
+#                                                   #             2    157.0                                            the float 0.0, which allows the
+#                                                   #             3      2.0                                            "add(2,)" to do addition, which 
+#                                                   #             4    520.0                                            turns the item 3 into float 2.0
+#                                                   #             Name: Sales, dtype: float64
+
+sales = [0,5,155,pd.NA,518]
+sales_series = pd.Series(sales, name="Sales", dtype="Int16") 
+# print(sales_series)                                 # returns ->  0     0
+#                                                     #             1     5
+#                                                     #             2     155
+#                                                     #             3     <NA>
+#                                                     #             4     518
+#                                                     #             Name: Sales, dtype: Int16 
+
+# print(sales_series.add(2, fill_value=0))            # returns ->  0      2                        *code explain*  ->  the 'fill_value=0' replaces
+#                                                     #             1      7                                            the value of item 3 "<NA>" with
+#                                                     #             2    157                                            the integer 0, which allows the
+#                                                     #             3      2                                            "add(2,)" to do addition, which 
+#                                                     #             4    520                                            turns the item 3 into integer 2
+#                                                     #             Name: Sales, dtype: Int16
+ 
+'''
+Identifying Missing Data
+_________________________________________________________________
+
+The .isna() and .value_counts() methods let you identify missing
+data in a Series
+  - The .isna() method returns True if a value is missing, and False
+    otherwise
+  
+    checklist = pd.Series(['COMPLETE',NaN,NaN,NaN,'COMPLETE'])
+    print(checklist)                                  returns ->  0     COMPLETE
+                                                                  1     NaN
+                                                                  2     NaN
+                                                                  3     NaN
+                                                                  4     COMPLETE
+                                                                  dtype: str
+
+    print(checklist.isna())                           returns ->  0     False
+                                                                  1     True
+                                                                  2     True
+                                                                  3     True
+                                                                  4     False
+                                                                  dtype: bool
+
+  - If you want a count of "NaN" or "<NA>" values use the
+    .sum() or .values_counts() method
+
+    print(checklist.isna().sum())                       returns ->    3
+
+
+    print(checklist.value_counts(dropna=False))         returns ->    NaN       3
+                                                                      COMPLETE  2
+                                                                      Name: count, dtype: int64
+_________________________________________________________________
+'''
+checklist = pd.Series(['COMPLETE',np.nan,np.nan,np.nan,'COMPLETE'])
+# print(checklist)
+# print(checklist.isna())
+# print(checklist.isna().sum())
+# print(checklist.value_counts(dropna=False))
+
+'''
+HANDLING MISSING DATA
+_________________________________________________________________
+The .dropna() and .fillna() methods let you handle missing data in 
+a Series
+  - The .dropna() method removes NaN values from your Series or DataFrame
+
+    checklist = pd.Series(['COMPLETE',np.nan, np.nan, np.nan, 'COMPLETE'])
+    print(checklist)                                  returns ->  0     COMPLETE
+                                                                  1     NaN
+                                                                  2     NaN
+                                                                  3     NaN
+                                                                  4     COMPLETE
+                                                                  dtype: str  
+
+    print(checklist.dropna())                         returns ->    0    COMPLETE
+                                                                    4    COMPLETE
+                                                                    dtype: str
+
+  - The .fillna(value) method replaces NaN values with a specified value
+
+    checklist = pd.Series(['COMPLETE',np.nan, np.nan, np.nan, 'COMPLETE'])
+    print(checklist)                                  returns ->  0     COMPLETE
+                                                                  1     NaN
+                                                                  2     NaN
+                                                                  3     NaN
+                                                                  4     COMPLETE
+                                                                  dtype: str  
+
+    print(checklist.fillna("INCOMPLETE"))             returns ->    0      COMPLETE
+                                                                    1    INCOMPLETE
+                                                                    2    INCOMPLETE
+                                                                    3    INCOMPLETE
+                                                                    4      COMPLETE
+                                                                    dtype: str
+
+  
+_________________________________________________________________
+'''
+print(checklist.dropna())
+print(checklist.fillna("INCOMPLETE")) 
+
+
+'''
+THE APPLY METHOD
+_________________________________________________________________
+The .apply() method lets you apply custom functions to Pandas Series
+
+  - This function will not be vectorized, so it is not as efficient 
+    as native functions
+
+    def discount(price):                    *code explain*  -> function discount takes in a price
+      if price > 20:                                           if price is greater than 20 (True)
+        return round(price * .09, 2)                           multiply price by .09 and round it to two decimals
+      return price                                             and return the lessened price.
+                                                                if price is less than 20 (True)
+                                                                return the original price
+
+  clean_wholesale = pd.Series([3.99, 5.99, 22.99, 7.99, 33.99])
+  print(clean_wholesale)                    # returns ->  0     3.99
+                                                          1     5.99
+                                                          2     22.99
+                                                          3     7.99
+                                                          4     33.99
+                                                          dtype:  float64
+
+  print(clean_wholesale.apply(discount))    # returns ->  0     3.99
+                                                          1     5.99
+                                                          2     20.69
+                                                          3     7.99
+                                                          4     30.59
+                                                          dtype:  float64
+
+  same result using a lambda function
+  print(clean_wholesale.apply(lambda x: round(x * 0.9) if x > 20 else x))                 # returns ->  0     3.99
+                                                                                                        1     5.99
+                                                                                                        2     20.69
+                                                                                                        3     7.99
+                                                                                                        4     30.59
+                                                                                                        dtype:  float64
+
+                                                              
+_________________________________________________________________
+'''
+
+'''
+THE WHERE METHOD
+_________________________________________________________________
+Pandas .where() method lets you manipulate data based on a logical condition
+  
+  - df.where(logical test, value if False, inplace=False)
+    *code explain*  ->  the where() method does not run if the logic statement is true.
+                        It runs when the logic is False.
+  
+  clean_wholesale = pd.Series([3.99, 5.99, 22.99, 7.99, 33.99])
+print(clean_wholesale)                                                                    # returns ->  0     3.99
+                                                                                                        1     5.99
+                                                                                                        2     22.99   where(clean_wholesale <= 20 returns -> False
+                                                                                                        3     7.99
+                                                                                                        4     33.99   where(clean_wholesale <= 20 returns -> False
+                                                                                                        dtype:  float64  
+  
+  clean_wholesale.where(clean_wholesale <= 20, round(clean_wholesale * 0.9, 2))           # returns ->  0     3.99
+                                                                                                        1     5.99
+                                                                                                        2     20.69
+                                                                                                        3     7.99
+                                                                                                        4     30.59
+                                                                                                        dtype:  float64
+
+  clean_wholesale.where(~(clean_wholesale > 20), round(clean_wholesale * 0.9, 2))         # returns ->  0     3.99      *code explain*  ->  the '~' Tilde symbol is negation.
+                                                                                                        1     5.99                          It turns logical statements to the
+                                                                                                        2     20.69                         opposite. Since the where() method
+                                                                                                        3     7.99                          works with False, "clean_wholesale > 20"
+                                                                                                        4     30.59                         the False would be item 0,1, and 3.
+                                                                                                        dtype:  float64                     By inserting the tilde "~(clean_wholesale > 20)"
+                                                                                                                                            the logic becomes "clean_wholesale not greater than 20"
+                                                                                                                                            False returns item 2 and 4
+
+
+CHAINING WHERE
+_________________________________________________________________
+You can chain.where() methods to combine logical expressions
+
+  clean_wholesale = pd.Series([3.99, 5.99, 22.99, 7.99, 33.99])
+print(clean_wholesale)                                                                    # returns ->  0     3.99
+                                                                                                        1     5.99
+                                                                                                        2     22.99   
+                                                                                                        3     7.99
+                                                                                                        4     33.99   
+                                                                                                        dtype:  float64
+
+print(clean_wholesale
+  .where(~(clean_wholesale > 20), round(clean_wholesale * 0.9, 2))
+  .where(clean_wholesale > 10, 0))                                                        # returns ->  0    0.00   where(clean_wholesale > 10, 0)) returns -> False = 0
+                                                                                                        1    0.00   where(clean_wholesale > 10, 0)) returns -> False = 0
+                                                                                                        2    20.69  where(~(clean_wholesale > 20)) returns -> False, which = clean_wholesale * 0.9
+                                                                                                        3    0.00   where(clean_wholesale > 10, 0)) returns -> False = 0
+                                                                                                        4    30.59  where(~(clean_wholesale > 20)) returns -> False, which = clean_wholesale * 0.9
+                                                                                                        dtype: float64
+
+NUMPY VS. PANDAS WHERE
+_________________________________________________________________
+The NumPy where() function is often more convenient & useful 
+than Pandas where() method
+
+  clean_wholesale = pd.Series([3.99, 5.99, 22.99, 7.99, 33.99])
+print(clean_wholesale)                                                                    # returns ->  0     3.99
+                                                                                                        1     5.99
+                                                                                                        2     22.99   
+                                                                                                        3     7.99
+                                                                                                        4     33.99   
+                                                                                                        dtype:  float64
+
+
+print(np.where(clean_wholesale > 20, "Discounted", "Normal Price"))                       *code explain*  ->  NumPy's where function evaluates the logic statement
+  returns ->  ['Normal Price' 'Normal Price' 'Discounted' 'Normal Price' 'Discounted']                        and allows for both True and False outcome to be displayed
+
+pandClean_Wholesale = pd.Series(np.where(clean_wholesale > 20, "Discounted", "Normal Price"))
+print(pandClean_Wholesale)                                                                returns ->  0    Normal Price
+                                                                                                      1    Normal Price
+                                                                                                      2      Discounted
+                                                                                                      3    Normal Price
+                                                                                                      4      Discounted
+                                                                                                      dtype: str
+_________________________________________________________________
+
+'''
+clean_wholesale = pd.Series([3.99, 5.99, 22.99, 7.99, 33.99])
+print(clean_wholesale)                                                                   
+
+print(clean_wholesale
+  .where(~(clean_wholesale > 20), round(clean_wholesale * .9, 2))
+  .where(clean_wholesale > 10, 0))
+
+print(np.where(clean_wholesale > 20, "Discounted", "Normal Price"))  
+pandClean_Wholesale = pd.Series(np.where(clean_wholesale > 20, "Discounted", "Normal Price"))
+print(pandClean_Wholesale)
