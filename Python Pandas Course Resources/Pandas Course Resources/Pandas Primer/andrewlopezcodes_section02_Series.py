@@ -165,6 +165,25 @@ _______________________________________________________________________
 
 '''
 oil_series = oil_series.where(~oil_series.isin([51.44, 47.83]), pd.NA)
-print(oil_series.isna().sum())
+# print(oil_series.isna().sum())
 
-print(oil_series.fillna(oil_series.mean()))
+# print(oil_series.fillna(oil_series.mean()))
+
+
+'''
+ Exercise 7: Apply and Where
+________________________________________________________________________
+
+Write a function that outputs "buy" if price is less than the 90th 
+percentile and "wait" if it is not. Apply it to the oil series."
+
+Then, create a series that multiplies price by .9 if the date is "2016-12-23"
+ or "2017-05-10", and 1.1 for all other dates. 
+
+________________________________________________________________________
+
+'''
+
+# print(oil_series.apply(lambda x: "buy" if x < oil_series.quantile(0.9) else "wait")) 
+
+print(np.where(oil_series.index.isin(["2016-12-23", "2017-05-10"]), round(oil_series * 0.9,2), round(oil_series * 1.1,2)))

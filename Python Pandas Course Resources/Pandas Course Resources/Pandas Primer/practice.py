@@ -341,7 +341,7 @@ transactions = pd.read_csv("C:\\Users\\sneak\\Desktop\\Maven Analytics\\Python P
 transactions_series = pd.Series(transactions['transactions'])
 # print(transactions_series.iloc[:5])
 # print(transactions_series.count())
-# print(transactions_series.iloc[:5].quantile([.5]))
+print(transactions_series.iloc[:5].quantile([.5]))
 
 
 
@@ -562,3 +562,139 @@ _________________________________________________________________
 '''
 print(checklist.dropna())
 print(checklist.fillna("INCOMPLETE")) 
+
+
+'''
+THE APPLY METHOD
+_________________________________________________________________
+The .apply() method lets you apply custom functions to Pandas Series
+
+  - This function will not be vectorized, so it is not as efficient 
+    as native functions
+
+    def discount(price):                    *code explain*  -> function discount takes in a price
+      if price > 20:                                           if price is greater than 20 (True)
+        return round(price * .09, 2)                           multiply price by .09 and round it to two decimals
+      return price                                             and return the lessened price.
+                                                                if price is less than 20 (True)
+                                                                return the original price
+
+  clean_wholesale = pd.Series([3.99, 5.99, 22.99, 7.99, 33.99])
+  print(clean_wholesale)                    # returns ->  0     3.99
+                                                          1     5.99
+                                                          2     22.99
+                                                          3     7.99
+                                                          4     33.99
+                                                          dtype:  float64
+
+  print(clean_wholesale.apply(discount))    # returns ->  0     3.99
+                                                          1     5.99
+                                                          2     20.69
+                                                          3     7.99
+                                                          4     30.59
+                                                          dtype:  float64
+
+  same result using a lambda function
+  print(clean_wholesale.apply(lambda x: round(x * 0.9) if x > 20 else x))                 # returns ->  0     3.99
+                                                                                                        1     5.99
+                                                                                                        2     20.69
+                                                                                                        3     7.99
+                                                                                                        4     30.59
+                                                                                                        dtype:  float64
+
+                                                              
+_________________________________________________________________
+'''
+
+'''
+THE WHERE METHOD
+_________________________________________________________________
+Pandas .where() method lets you manipulate data based on a logical condition
+  
+  - df.where(logical test, value if False, inplace=False)
+    *code explain*  ->  the where() method does not run if the logic statement is true.
+                        It runs when the logic is False.
+  
+  clean_wholesale = pd.Series([3.99, 5.99, 22.99, 7.99, 33.99])
+print(clean_wholesale)                                                                    # returns ->  0     3.99
+                                                                                                        1     5.99
+                                                                                                        2     22.99   where(clean_wholesale <= 20 returns -> False
+                                                                                                        3     7.99
+                                                                                                        4     33.99   where(clean_wholesale <= 20 returns -> False
+                                                                                                        dtype:  float64  
+  
+  clean_wholesale.where(clean_wholesale <= 20, round(clean_wholesale * 0.9, 2))           # returns ->  0     3.99
+                                                                                                        1     5.99
+                                                                                                        2     20.69
+                                                                                                        3     7.99
+                                                                                                        4     30.59
+                                                                                                        dtype:  float64
+
+  clean_wholesale.where(~(clean_wholesale > 20), round(clean_wholesale * 0.9, 2))         # returns ->  0     3.99      *code explain*  ->  the '~' Tilde symbol is negation.
+                                                                                                        1     5.99                          It turns logical statements to the
+                                                                                                        2     20.69                         opposite. Since the where() method
+                                                                                                        3     7.99                          works with False, "clean_wholesale > 20"
+                                                                                                        4     30.59                         the False would be item 0,1, and 3.
+                                                                                                        dtype:  float64                     By inserting the tilde "~(clean_wholesale > 20)"
+                                                                                                                                            the logic becomes "clean_wholesale not greater than 20"
+                                                                                                                                            False returns item 2 and 4
+
+
+CHAINING WHERE
+_________________________________________________________________
+You can chain.where() methods to combine logical expressions
+
+  clean_wholesale = pd.Series([3.99, 5.99, 22.99, 7.99, 33.99])
+print(clean_wholesale)                                                                    # returns ->  0     3.99
+                                                                                                        1     5.99
+                                                                                                        2     22.99   
+                                                                                                        3     7.99
+                                                                                                        4     33.99   
+                                                                                                        dtype:  float64
+
+print(clean_wholesale
+  .where(~(clean_wholesale > 20), round(clean_wholesale * 0.9, 2))
+  .where(clean_wholesale > 10, 0))                                                        # returns ->  0    0.00   where(clean_wholesale > 10, 0)) returns -> False = 0
+                                                                                                        1    0.00   where(clean_wholesale > 10, 0)) returns -> False = 0
+                                                                                                        2    20.69  where(~(clean_wholesale > 20)) returns -> False, which = clean_wholesale * 0.9
+                                                                                                        3    0.00   where(clean_wholesale > 10, 0)) returns -> False = 0
+                                                                                                        4    30.59  where(~(clean_wholesale > 20)) returns -> False, which = clean_wholesale * 0.9
+                                                                                                        dtype: float64
+
+NUMPY VS. PANDAS WHERE
+_________________________________________________________________
+The NumPy where() function is often more convenient & useful 
+than Pandas where() method
+
+  clean_wholesale = pd.Series([3.99, 5.99, 22.99, 7.99, 33.99])
+print(clean_wholesale)                                                                    # returns ->  0     3.99
+                                                                                                        1     5.99
+                                                                                                        2     22.99   
+                                                                                                        3     7.99
+                                                                                                        4     33.99   
+                                                                                                        dtype:  float64
+
+
+print(np.where(clean_wholesale > 20, "Discounted", "Normal Price"))                       *code explain*  ->  NumPy's where function evaluates the logic statement
+  returns ->  ['Normal Price' 'Normal Price' 'Discounted' 'Normal Price' 'Discounted']                        and allows for both True and False outcome to be displayed
+
+pandClean_Wholesale = pd.Series(np.where(clean_wholesale > 20, "Discounted", "Normal Price"))
+print(pandClean_Wholesale)                                                                returns ->  0    Normal Price
+                                                                                                      1    Normal Price
+                                                                                                      2      Discounted
+                                                                                                      3    Normal Price
+                                                                                                      4      Discounted
+                                                                                                      dtype: str
+_________________________________________________________________
+
+'''
+clean_wholesale = pd.Series([3.99, 5.99, 22.99, 7.99, 33.99])
+print(clean_wholesale)                                                                   
+
+print(clean_wholesale
+  .where(~(clean_wholesale > 20), round(clean_wholesale * .9, 2))
+  .where(clean_wholesale > 10, 0))
+
+print(np.where(clean_wholesale > 20, "Discounted", "Normal Price"))  
+pandClean_Wholesale = pd.Series(np.where(clean_wholesale > 20, "Discounted", "Normal Price"))
+print(pandClean_Wholesale)
