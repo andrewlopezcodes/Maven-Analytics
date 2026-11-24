@@ -55,19 +55,44 @@ You'll more likely create a DataFrame by using the Pandas read_csv()
 function. You'll usually read in a flat file (csv, txt, or tsv)
 
   import pandas as pd
-  retail_df = pd.read_csv("retail/train.csv")
+  oil = pd.read_csv('oil.csv')
+  print(oil)                            returns ->              date  dcoilwtico
+                                                    0     2013-01-01         NaN
+                                                    1     2013-01-02       93.14
+                                                    2     2013-01-03       92.97
+                                                    3     2013-01-04       93.12
+                                                    4     2013-01-07       93.20
+                                                    ...          ...         ...
+                                                    1213  2017-08-25       47.65
+                                                    1214  2017-08-28       46.40
+                                                    1215  2017-08-29       46.46
+                                                    1216  2017-08-30       45.96
+                                                    1217  2017-08-31       47.26
+                                                    [1218 rows x 2 columns]       <-  *code explain*  shape of the dataFrame
+                                                                                                      print(oil.shape)
 
 ___________________________________________________________________
 '''
-homeDF = pd.DataFrame(
-    { "id": [1,2],
-      "store_nbr": [1, 2],
-      "family": ["POULTRY", "PRODUCE"]
-    }
-)
+# homeDF = pd.DataFrame(
+#     { "id": [1,2],
+#       "store_nbr": [1, 2],
+#       "family": ["POULTRY", "PRODUCE"]
+#     }
+# )
 
-print(homeDF.shape)       #returns  ->  (2, 3)
-print(homeDF.index)       #returns  ->  RangeIndex(start=0, stop=2, step=1)
-print(homeDF.columns)     #returns  ->  Index(['id', 'store_nbr', 'family'], dtype='str')
-print(homeDF.axes)        #returns  ->  [RangeIndex(start=0, stop=2, step=1), Index(['id', 'store_nbr', 'family'], dtype='str')]
-print(homeDF.dtypes)
+# print(homeDF.shape)       #returns  ->  (2, 3)
+# print(homeDF.index)       #returns  ->  RangeIndex(start=0, stop=2, step=1)
+# print(homeDF.columns)     #returns  ->  Index(['id', 'store_nbr', 'family'], dtype='str')
+# print(homeDF.axes)        #returns  ->  [RangeIndex(start=0, stop=2, step=1), Index(['id', 'store_nbr', 'family'], dtype='str')]
+# print(homeDF.dtypes)
+
+
+oil = pd.read_csv('oil.csv')
+print(oil)
+print(oil.shape)
+print(oil.index)
+print(oil.columns)
+oil.columns = ['price_date', 'oil_price']
+print(oil.axes)
+print(oil.dtypes)
+print(oil)
