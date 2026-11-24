@@ -48,6 +48,15 @@ Pandas DataFrame() function
   )                                       returns ->     id  store_nbr   family
                                                       0   1          1  POULTRY
                                                       1   2          2  PRODUCE
+
+Creating A DataFrame
+___________________________________________________________________
+You'll more likely create a DataFrame by using the Pandas read_csv() 
+function. You'll usually read in a flat file (csv, txt, or tsv)
+
+  import pandas as pd
+  retail_df = pd.read_csv("retail/train.csv")
+
 ___________________________________________________________________
 '''
 homeDF = pd.DataFrame(
