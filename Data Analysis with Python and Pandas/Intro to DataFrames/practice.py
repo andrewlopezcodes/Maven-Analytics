@@ -359,7 +359,59 @@ oil.columns = ['date','price']
 '''
 ACCESSING DATA WITH ILOC
 ___________________________________________________________________
+The .iloc() accessor filters DataFrames by their row and column indices
+• The first parameter accesses rows, and the second accesses columns
+
+print(oil.iloc[:5,:])     returns ->           date  price    *code explain*  ->  ".iloc[:5,:]" return index, start with 0 go to 
+                                      0  2013-01-01    NaN                        5, not inclusive    
+                                      1  2013-01-02  93.14
+                                      2  2013-01-03  92.97
+                                      3  2013-01-04  93.12
+                                      4  2013-01-07  93.20
 
 
+print(oil.iloc[:, :])     returns ->              date  price    *code explain*  ->
+                                      0     2013-01-01    NaN
+                                      1     2013-01-02  93.14
+                                      2     2013-01-03  92.97
+                                      3     2013-01-04  93.12
+                                      4     2013-01-07  93.20
+                                      ...          ...    ...
+                                      1213  2017-08-25  47.65
+                                      1214  2017-08-28  46.40
+                                      1215  2017-08-29  46.46
+                                      1216  2017-08-30  45.96
+                                      1217  2017-08-31  47.26
+                                      [1218 rows x 2 columns]
 ___________________________________________________________________
 '''
+
+# print(oil.iloc[:5,:])
+# print(oil.iloc[:, :])
+
+'''
+ACCESSING DATA WITH LOC
+___________________________________________________________________
+The .loc() accessor filters DataFrames by their row and column labels
+  - The first parameter accesses rows, and the second accesses columns
+
+print(oil.loc[:5, ['date']])     returns ->          date      *code explain*  ->  ".loc[:5, ['date']]" returns a 2D dataFrame starting index 0 go to index
+                                            0  2013-01-01                           5, inclusive.  {'date': [2013-01-01,2013-01-02,2013-01-03,2013-01-04,2013-01-07,2013-01-08]}
+                                            1  2013-01-02
+                                            2  2013-01-03
+                                            3  2013-01-04
+                                            4  2013-01-07
+                                            5  2013-01-08
+
+
+print(oil.iloc[:, 'date'])       returns  ->  0    2013-01-01   *code explain*  ->  ".loc[:5, 'date'] returns a 1D index essentially a numpy array.
+                                              1    2013-01-02                         [2013-01-01,2013-01-02,2013-01-03,2013-01-04,2013-01-07,2013-01-08]    
+                                              2    2013-01-03
+                                              3    2013-01-04
+                                              4    2013-01-07
+                                              5    2013-01-08
+                                              Name: date, dtype: str
+___________________________________________________________________
+'''
+
+print(oil.loc[:5, 'date']) 
