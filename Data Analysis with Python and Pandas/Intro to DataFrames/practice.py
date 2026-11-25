@@ -227,4 +227,63 @@ ___________________________________________________________________
 
 # print(oil.info())
 # print(oil.info(show_counts=True)) 
-print(oil.describe(include="all").round())
+# print(oil.describe(include="all").round())
+
+
+'''
+  ACCESING DATAFRAME COLUMNS
+___________________________________________________________________
+You can access a DataFrame column by using bracket or dot notation
+  - Dot notation only works for valid Python variable names 
+    (no spaces, special characters, etc.), and if the column name is 
+    not the same as an existing variable or method
+
+  - PRO TIP: Even though you will see many examples of dot notation 
+    in use, stick to bracket notation for single columns of data 
+    as it is less likely to cause issues  
+
+
+  - You can use Series operations on DataFrame columns (each column is a Pandas Series!)
+
+
+  print(oil['price_date'])                    returns ->  0       2013-01-01
+                                                          1       2013-01-02
+                                                          2       2013-01-03
+                                                          3       2013-01-04
+                                                          4       2013-01-07
+                                                                     ...    
+                                                          1213    2017-08-25
+                                                          1214    2017-08-28
+                                                          1215    2017-08-29
+                                                          1216    2017-08-30
+                                                          1217    2017-08-31
+                                                          Name: price_date, Length: 1218, dtype: str
+
+
+print(oil.price_date)                         returns ->  0       2013-01-01
+                                                          1       2013-01-02
+                                                          2       2013-01-03
+                                                          3       2013-01-04
+                                                          4       2013-01-07
+                                                                     ...    
+                                                          1213    2017-08-25
+                                                          1214    2017-08-28
+                                                          1215    2017-08-29
+                                                          1216    2017-08-30
+                                                          1217    2017-08-31
+                                                          Name: price_date, Length: 1218, dtype: str
+
+
+print(oil['oil_price'].nunique())             returns ->  0       2013-01-01
+print(oil['oil_price'].mean())
+print(oil['oil_price'].sum().round())
+print(oil[])
+
+___________________________________________________________________
+'''
+
+# print(oil['price_date'])
+print(oil.price_date)
+print(oil['oil_price'].nunique())
+print(oil['oil_price'].mean())
+print(oil['oil_price'].sum().round())
