@@ -231,7 +231,7 @@ ___________________________________________________________________
 
 
 '''
-  ACCESING DATAFRAME COLUMNS
+  ACCESSING DATAFRAME COLUMNS
 ___________________________________________________________________
 You can access a DataFrame column by using bracket or dot notation
   - Dot notation only works for valid Python variable names 
@@ -244,6 +244,9 @@ You can access a DataFrame column by using bracket or dot notation
 
 
   - You can use Series operations on DataFrame columns (each column is a Pandas Series!)
+
+
+  - 
 
 
   print(oil['price_date'])                    returns ->  0       2013-01-01
@@ -274,16 +277,89 @@ print(oil.price_date)                         returns ->  0       2013-01-01
                                                           Name: price_date, Length: 1218, dtype: str
 
 
-print(oil['oil_price'].nunique())             returns ->  0       2013-01-01
-print(oil['oil_price'].mean())
-print(oil['oil_price'].sum().round())
-print(oil[])
+print(oil['oil_price'].nunique())                         returns ->  998
+print(oil['oil_price'].mean().round())                    returns ->  68.0
+print(oil['oil_price'].sum().round())                     returns ->  79564.0
+print(oil['oil_price'].value_counts().iloc[:5])           returns ->   oil_price          *code explain*  ->  This code finds the top 5 most 
+                                                                      93.12    4                              common oil prices in your data 
+                                                                      96.44    4                              and counts how many times each 
+                                                                      60.01    4                              one appears.
+                                                                      47.65    4
+                                                                      47.72    4
+                                                                      Name: count, dtype: int64
+
+
+You can select multiple columns with a list of column names between brackets
+  - This is ideal for selecting non-consecutive columns in a DataFrame
+
+  print(oil[['oil_price','price_date']].fillna(0))            returns ->          oil_price  price_date
+                                                                            0          0.00  2013-01-01
+                                                                            1         93.14  2013-01-02
+                                                                            2         92.97  2013-01-03
+                                                                            3         93.12  2013-01-04
+                                                                            4         93.20  2013-01-07
+                                                                            ...         ...         ...
+                                                                            1213      47.65  2017-08-25
+                                                                            1214      46.40  2017-08-28
+                                                                            1215      46.46  2017-08-29
+                                                                            1216      45.96  2017-08-30
+                                                                            1217      47.26  2017-08-31
+                                                                            [1218 rows x 2 columns]
+
+column bracket notation should primarily be used for creating new columns and quick exploration
+
+oil.columns = ['date','price']                      *code explain*  ->  changing the name of the columns
+
+print(oil)                                          returns =>              date  price
+                                                                0     2013-01-01    NaN
+                                                                1     2013-01-02  93.14
+                                                                2     2013-01-03  92.97
+                                                                3     2013-01-04  93.12
+                                                                4     2013-01-07  93.20
+                                                                ...          ...    ...
+                                                                1213  2017-08-25  47.65
+                                                                1214  2017-08-28  46.40
+                                                                1215  2017-08-29  46.46
+                                                                1216  2017-08-30  45.96
+                                                                1217  2017-08-31  47.26
+                                                                [1218 rows x 2 columns]
+
+print(oil[['price','date']])                        returns =>          price        date
+                                                                  0       NaN  2013-01-01
+                                                                  1     93.14  2013-01-02
+                                                                  2     92.97  2013-01-03
+                                                                  3     93.12  2013-01-04
+                                                                  4     93.20  2013-01-07
+                                                                  ...     ...         ...
+                                                                  1213  47.65  2017-08-25
+                                                                  1214  46.40  2017-08-28
+                                                                  1215  46.46  2017-08-29
+                                                                  1216  45.96  2017-08-30
+                                                                  1217  47.26  2017-08-31
+                                                                  [1218 rows x 2 columns]
+
+
+
 
 ___________________________________________________________________
 '''
 
 # print(oil['price_date'])
-print(oil.price_date)
-print(oil['oil_price'].nunique())
-print(oil['oil_price'].mean())
-print(oil['oil_price'].sum().round())
+# print(oil.price_date)
+# print(oil['oil_price'].nunique())
+# print(f'This is the average: ${oil['oil_price'].mean().round()}')
+# print(f'This is the sum of oil prices: ${oil['oil_price'].sum().round()}')
+# print(f'This is the first 5 unique values in a column with their frequencies:\n {oil['oil_price'].value_counts().iloc[:5]}')
+# print(oil[['oil_price','price_date']].fillna(0))
+oil.columns = ['date','price']
+# print(oil)
+# print(oil[['price','date']])
+
+
+'''
+ACCESSING DATA WITH ILOC
+___________________________________________________________________
+
+
+___________________________________________________________________
+'''
