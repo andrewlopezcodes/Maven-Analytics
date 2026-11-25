@@ -88,11 +88,143 @@ ___________________________________________________________________
 
 
 oil = pd.read_csv('oil.csv')
-print(oil)
-print(oil.shape)
-print(oil.index)
-print(oil.columns)
+# print(oil)
+# print(oil.shape)
+# print(oil.index)
+# print(oil.columns)
 oil.columns = ['price_date', 'oil_price']
-print(oil.axes)
-print(oil.dtypes)
-print(oil)
+# print(oil.axes)
+# print(oil.dtypes)
+# print(oil)
+
+'''
+EXPLORING A DATAFRAME
+___________________________________________________________________
+You can explore a DataFrame with these Pandas methods
+
+Method                      Descriptions                      
+====================================================================
+head      df.head(nrows)        Returns the first n rows of the DataFrame (5 by default) 
+tail      df.tail(nrows)        Returns the last n rows of the DataFrame (5 by default) 
+sample    df.sample(n)rows      Returns n rows from a random sample (1 by default) 
+info      df.info()             Returns key details on a DataFrame size , columns, and memory usage 
+describe  df.describe(include)  Returns descriptive statistics for the columns in a DataFrame (only numeric
+                                columns by default; use the "include" argument to specify more columns) 
+
+====================================================================
+ HEAD & TAIL 
+====================================================================                             
+The .head() and .tail()methods return the top or bottom rows in a DataFrame
+• This is a great way to QA data upon import!
+• You can change the number of rows by entering an integer
+
+print(df.head(20))
+print(dr.tail(6))
+
+
+====================================================================
+ SAMPLE 
+==================================================================== 
+The .sample() method returns a random sample of rows from a DataFrame
+  - The .sample() method returns 1 row by default
+  - You can specify the number of rows to return, in this case 38, and 
+    set a random_state to ensure your sample can be reproduced later 
+    if needed.
+
+print(df.sample(38, random_state=12345))
+
+
+====================================================================
+ INFO
+==================================================================== 
+The .info() method returns details on a DataFrame properties and memory usage
+
+  - The .info() method will show non-null counts
+    on a DataFrame with less than ~1.7m rows,
+    but you can specify show_counts=True to
+    ensure they are always displayed
+    This is a great way to quickly identify missing
+    values 
+
+  – if the non-null count is less than the
+    total number of rows, then the difference is
+    the number of NaN values in that column!
+    (In this case there are none)
+
+print(oil.info())                     returns ->  RangeIndex: 1218 entries, 0 to 1217
+                                                  Data columns (total 2 columns):
+                                                      Column      Non-Null Count  Dtype
+                                                    ---  ------      --------------  -----
+                                                      0   price_date  1218 non-null   str    
+                                                      1   oil_price   1175 non-null   float64
+                                                      dtypes: float64(1), str(1)
+                                                      memory usage: 19.2 KB
+                                                      None
+
+
+print(oil.info(show_counts=True))     returns ->  <class 'pandas.DataFrame'>
+                                                  RangeIndex: 1218 entries, 0 to 1217
+                                                  Data columns (total 2 columns):
+                                                  #   Column      Non-Null Count  Dtype  
+                                                  ---  ------      --------------  -----  
+                                                   0   price_date  1218 non-null   str    
+                                                   1   oil_price   1175 non-null   float64
+                                                   dtypes: float64(1), str(1)
+                                                   memory usage: 19.2 KB
+                                                   None
+====================================================================
+ DESCRIBE
+==================================================================== 
+The .describe() method returns key statistics on DataFrame columns
+
+  - Use include=“all” to return statistics for all columns, or choose 
+    a specific data type to include
+  - Note that the .round() method suppresses scientific notation and
+    makes the output more readable
+  
+
+  print(oil.describe())                   returns ->           oil_price
+                                                      count  1175.000000
+                                                      mean     67.714366
+                                                      std      25.630476
+                                                      min      26.190000
+                                                      25%      46.405000
+                                                      50%      53.190000
+                                                      75%      95.660000
+                                                      max     110.620000
+
+
+
+  print(oil.describe(include="all"))      returns ->          price_date    oil_price
+                                                      count         1218  1175.000000
+                                                      unique        1218          NaN ->  Unique values
+                                                      top     2013-01-01          NaN ->  most common value (top)
+                                                      freq             1          NaN ->  its frequency being 1 means the dates don't repeat
+                                                      mean           NaN    67.714366
+                                                      std            NaN    25.630476
+                                                      min            NaN    26.190000
+                                                      25%            NaN    46.405000
+                                                      50%            NaN    53.190000
+                                                      75%            NaN    95.660000
+                                                      max            NaN   110.620000
+
+
+print(oil.describe(include="all").round())      returns ->          price_date  oil_price
+                                                            count         1218     1175.0
+                                                            unique        1218        NaN
+                                                            top     2013-01-01        NaN
+                                                            freq             1        NaN
+                                                            mean           NaN       68.0
+                                                            std            NaN       26.0
+                                                            min            NaN       26.0
+                                                            25%            NaN       46.0
+                                                            50%            NaN       53.0
+                                                            75%            NaN       96.0
+                                                            max            NaN      111.0
+
+___________________________________________________________________
+'''
+
+# print(oil.info())
+# print(oil.info(show_counts=True)) 
+print(oil.describe(include="all").round())
